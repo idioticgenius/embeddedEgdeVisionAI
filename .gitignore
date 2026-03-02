@@ -1,0 +1,34 @@
+# Build artifacts
+*.jou
+*.bak
+*.tmp
+*.swp
+*~
+
+# Vivado / Vitis project state
+**/project/
+**/.runs/
+**/.cache/
+**/.metadata/
+**/.analytics/
+**/.lock
+**/.Xil/
+**/vivado_*.log
+**/vivado*.jou
+**/.recovery/
+
+# PetaLinux build outputs
+**/build/
+**/images/linux/
+**/components/plnx_workspace/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+
+# Large binaries handled out-of-band
+hardware/Prepackaged_SD_Image/*.img
