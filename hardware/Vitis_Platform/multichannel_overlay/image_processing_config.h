@@ -1,3 +1,4 @@
+// vmix layers reduced from 8 to 6 to fit BRAM budget on KV260
 /*
  * Copyright 2020 - 2022 Xilinx, Inc.
  * Copyright (C) 2022-2023 Advanced Micro Devices, Inc.
