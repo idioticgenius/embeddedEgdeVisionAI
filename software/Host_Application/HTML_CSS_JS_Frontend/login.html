@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sign in · Embedded Edge Vision AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg0:#f7f8fa;--bg1:#ffffff;--bg2:#eef1f4;--bg3:#e3e7ec;
+  --line:#d6dbe0;--mid:#aeb6bf;--muted:#6b7280;--text:#111827;--dim:#374151;
+  --accent:#0b72b9;--accent2:#c2410c;--green:#15803d;--red:#b91c1c;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --r:5px;
+}
+html,body{background:var(--bg0);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.45;min-height:100vh;-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:center;justify-content:center;padding:24px}
+.wrap{width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;gap:28px}
+
+/* Title block */
+.title-block{text-align:center;display:flex;flex-direction:column;gap:6px}
+.title{font-family:var(--sans);font-weight:800;font-size:22px;letter-spacing:.08em;color:var(--accent);text-transform:uppercase}
+.title-rule{width:96px;height:2px;background:var(--accent);margin:2px auto 0;opacity:.7}
+.subtitle{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.08em;margin-top:6px}
+
+/* Card */
+.card{width:100%;background:var(--bg1);border:1px solid var(--line);border-radius:var(--r);padding:26px 28px 24px;box-shadow:0 4px 24px rgba(17,24,39,.04)}
+.card-header{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.card-header::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* Form */
+form{display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.field input{font-family:var(--sans);font-size:14px;color:var(--text);padding:9px 12px;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);outline:none;transition:border-color .15s,background .15s}
+.field input:focus{border-color:var(--accent);background:var(--bg1)}
+button{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);cursor:pointer;transition:background .15s,transform .05s;margin-top:6px}
+button:hover{background:#0a5f9a}
+button:active{transform:translateY(1px)}
+
+/* Error */
+.err-msg{display:none;font-family:var(--mono);font-size:12px;color:var(--red);background:rgba(185,28,28,.08);border:1px solid rgba(185,28,28,.25);border-radius:var(--r);padding:8px 12px;margin-bottom:14px;letter-spacing:.04em}
+.err-msg.visible{display:block}
+
+/* Footer */
+.foot{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title-block">
+    <div class="title">Embedded Edge Vision AI</div>
+    <div class="title-rule"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Sign in</div>
+    <div id="err" class="err-msg">Invalid credentials</div>
+    <form method="POST" action="/login" autocomplete="off">
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" required autofocus/>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required/>
+      </div>
+      <button type="submit">Sign in</button>
+    </form>
+  </div>
+
+  <div class="foot">local network only</div>
+</div>
+
+<script>
+if (new URLSearchParams(window.location.search).get('err') === '1') {
+  document.getElementById('err').classList.add('visible');
+}
+</script>
+</body>
+</html>

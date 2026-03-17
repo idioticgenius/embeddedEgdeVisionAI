@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VVAS 3.0 Edge Vision AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg0:#f7f8fa;--bg1:#ffffff;--bg2:#eef1f4;--bg3:#e3e7ec;
+  --line:#d6dbe0;--mid:#aeb6bf;--muted:#6b7280;--text:#111827;--dim:#374151;
+  --accent:#0b72b9;--accent2:#c2410c;--green:#15803d;--red:#b91c1c;--yellow:#a16207;
+  --person:#0b72b9;--face:#c2410c;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --cond:'Inter',system-ui,sans-serif;--r:5px;
+}
+html,body{background:var(--bg0);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.45;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* Header */
+header{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:56px;
+  border-bottom:1px solid var(--line);background:var(--bg1);position:sticky;top:0;z-index:200}
+.logo{display:flex;align-items:baseline;gap:10px}
+.logo-mark{font-family:var(--cond);font-weight:800;font-size:20px;letter-spacing:.04em;color:var(--accent)}
+.logo-sub{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.logo-version{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--green);background:rgba(21,128,61,.1);padding:3px 8px;border-radius:3px;margin-left:8px}
+.header-right{display:flex;align-items:center;gap:18px}
+.status-pill{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.06em;color:var(--dim)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);transition:background .3s,box-shadow .3s}
+.status-dot.running{background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 1.8s ease-in-out infinite}
+.status-dot.stopped{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.uptime{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--green);display:none}
+.uptime.visible{display:block}
+
+/* Main layout */
+main{display:grid;grid-template-columns:1fr 380px;height:calc(100vh - 56px);overflow:hidden}
+.left{display:flex;flex-direction:column;overflow-y:auto;height:100%;border-right:1px solid var(--line)}
+.right{display:flex;flex-direction:column;overflow:hidden;height:calc(100vh - 56px);position:sticky;top:56px}
+
+/* Section label */
+.sec{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;
+  padding:12px 20px 8px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line)}
+.sec::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* Layout Editor */
+.editor-wrap{padding:16px 20px;background:var(--bg1);border-bottom:1px solid var(--line)}
+.editor-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;row-gap:8px}
+.editor-toolbar-label{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.cnt-btns{display:flex;gap:5px}
+.cnt-btn{width:38px;height:32px;font-family:var(--sans);font-weight:700;font-size:15px;
+  border:1px solid var(--mid);border-radius:var(--r);background:var(--bg2);color:var(--muted);
+  cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.cnt-btn:hover{border-color:var(--dim);color:var(--text)}
+.cnt-btn.active{background:rgba(11,114,185,.1);border-color:var(--accent);color:var(--accent)}
+.tool-btn{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  padding:6px 12px;border:1px solid var(--mid);border-radius:var(--r);background:var(--bg2);
+  color:var(--muted);cursor:pointer;transition:all .15s}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Canvas */
+.canvas-outer{position:relative;width:100%;background:var(--bg1);border:1px solid var(--mid);
+  border-radius:var(--r);overflow:hidden;user-select:none;cursor:default}
+.canvas-outer::before{content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,var(--line) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;opacity:.8}
+
+/* Channel windows */
+.ch-win{position:absolute;border:2px solid var(--accent);border-radius:2px;
+  background:rgba(0,229,255,.07);cursor:move;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:3px;min-width:60px;min-height:34px;
+  transition:box-shadow .15s}
+.ch-win:hover{box-shadow:0 0 0 1px var(--accent),0 4px 20px rgba(0,229,255,.2)}
+.ch-win.face-model{border-color:var(--face);background:rgba(194,65,12,.07)}
+.ch-win.face-model:hover{box-shadow:0 0 0 1px var(--face),0 4px 20px rgba(194,65,12,.2)}
+.ch-win.selected{box-shadow:0 0 0 2px var(--accent),0 4px 24px rgba(11,114,185,.35)}
+.ch-win.face-model.selected{box-shadow:0 0 0 2px var(--face),0 4px 24px rgba(194,65,12,.35)}
+
+.win-label{font-family:var(--sans);font-weight:800;font-size:13px;letter-spacing:.04em;
+  color:var(--accent);text-transform:uppercase;pointer-events:none}
+.ch-win.face-model .win-label{color:var(--face)}
+.win-file{font-family:var(--mono);font-size:11px;color:var(--dim);pointer-events:none;
+  max-width:90%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+.win-rect{font-family:var(--mono);font-size:10px;color:var(--muted);pointer-events:none;letter-spacing:.04em}
+.win-badge{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 6px;border-radius:3px;pointer-events:none}
+.win-badge.refinedet{color:var(--person);background:rgba(11,114,185,.1);border:1px solid rgba(11,114,185,.3)}
+.win-badge.densebox{color:var(--face);background:rgba(194,65,12,.1);border:1px solid rgba(194,65,12,.3)}
+
+/* Resize handles */
+.rh{position:absolute;z-index:10}
+.rh-se{width:12px;height:12px;bottom:-1px;right:-1px;cursor:se-resize;background:var(--accent);border-radius:0 0 2px 0;opacity:.8}
+.rh-sw{width:12px;height:12px;bottom:-1px;left:-1px;cursor:sw-resize;background:var(--accent);border-radius:0 0 0 2px;opacity:.8}
+.rh-ne{width:12px;height:12px;top:-1px;right:-1px;cursor:ne-resize;background:var(--accent);border-radius:0 2px 0 0;opacity:.8}
+.rh-nw{width:12px;height:12px;top:-1px;left:-1px;cursor:nw-resize;background:var(--accent);border-radius:2px 0 0 0;opacity:.8}
+.ch-win.face-model .rh-se,.ch-win.face-model .rh-sw,.ch-win.face-model .rh-ne,.ch-win.face-model .rh-nw{background:var(--face)}
+
+/* Coord readout */
+.coord-bar{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--muted);margin-top:8px;display:flex;gap:14px;flex-wrap:wrap}
+.coord-item{color:var(--dim)}
+.coord-item span{color:var(--accent)}
+
+/* Channel Config */
+.ch-list{display:flex;flex-direction:column}
+.ch-row{border-bottom:1px solid var(--line);transition:background .15s}
+.ch-row.inactive{opacity:.3;pointer-events:none}
+.ch-row.selected-row{background:rgba(11,114,185,.05)}
+
+.ch-top{display:grid;grid-template-columns:86px 1fr auto;gap:10px;align-items:center;padding:10px 16px}
+.ch-label{font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:.02em;color:var(--dim);
+  display:flex;flex-direction:column;gap:2px}
+.ch-label span{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+.ch-row.selected-row .ch-label{color:var(--accent)}
+.ch-row.selected-row.face-row .ch-label{color:var(--face)}
+.ch-input{background:var(--bg1);border:1px solid var(--mid);border-radius:var(--r);color:var(--text);
+  font-family:var(--mono);font-size:13px;padding:7px 10px;outline:none;width:100%;transition:border-color .15s}
+.ch-input:focus{border-color:var(--accent)}
+.ch-input::placeholder{color:var(--muted)}
+.ch-browse{background:var(--bg2);border:1px solid var(--mid);border-radius:var(--r);color:var(--dim);
+  font-family:var(--mono);font-size:12px;font-weight:500;padding:7px 12px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.ch-browse:hover{background:var(--mid);color:var(--text);border-color:var(--accent)}
+
+/* File / Webcam source toggle */
+.src-toggle{display:inline-flex;gap:4px;border-radius:var(--r);padding:2px;background:var(--bg2);border:1px solid var(--mid)}
+.src-btn{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;padding:5px 9px;
+  border:0;border-radius:3px;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.src-btn:hover{color:var(--text)}
+.src-btn.active{background:var(--accent);color:#fff}
+
+.ch-bottom{display:flex;align-items:center;gap:10px;padding:8px 16px 10px;background:var(--bg2)}
+.mtog-label{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+.mtog{display:flex;gap:4px;flex:1}
+.mbtn{flex:1;font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.04em;text-transform:uppercase;
+  padding:7px 6px;border-radius:var(--r);cursor:pointer;border:1px solid var(--mid);background:var(--bg1);
+  color:var(--muted);transition:all .15s}
+.mbtn:hover{color:var(--text);border-color:var(--dim)}
+.mbtn.ap{background:rgba(11,114,185,.1);border-color:var(--person);color:var(--person)}
+.mbtn.af{background:rgba(194,65,12,.1);border-color:var(--face);color:var(--face)}
+
+/* Zone drawing in the Layout Editor canvas */
+.zone-shape{position:absolute;pointer-events:none}
+.zone-rect{border:2px dashed #dc2626;background:rgba(220,38,38,.12);border-radius:3px}
+.zone-rect.selected{border-style:solid;box-shadow:0 0 0 1px #dc2626,0 4px 18px rgba(220,38,38,.35)}
+.zone-line{stroke:#dc2626;stroke-width:3;stroke-dasharray:6 4}
+.zone-label{position:absolute;top:-18px;left:0;font-family:var(--mono);font-size:10px;font-weight:600;
+  color:#dc2626;background:rgba(255,255,255,.85);padding:1px 4px;border-radius:3px;white-space:nowrap;pointer-events:none}
+.zone-mode .ch-win{cursor:crosshair}
+.zone-mode .ch-win .rh{display:none}
+
+.editor-toolbar .mode-toggle{display:inline-flex;gap:4px;margin-left:8px}
+.mode-btn{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.06em;padding:6px 10px;
+  border:1px solid var(--mid);border-radius:var(--r);background:var(--bg2);color:var(--muted);cursor:pointer;transition:all .15s}
+.mode-btn:hover{color:var(--text);border-color:var(--dim)}
+.mode-btn.active{background:#dc2626;border-color:#dc2626;color:#fff}
+
+/* Alert cards — one per channel */
+.alerts-panel{padding:12px 14px;background:var(--bg1);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.alert-card{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border-radius:6px;
+  border:1px solid var(--line);background:var(--bg2);transition:all .2s;min-height:74px;justify-content:center}
+.alert-card.inactive{opacity:.22}
+.alert-card.clear{border-color:rgba(21,128,61,.35);background:rgba(21,128,61,.05)}
+.alert-card.active{border-color:#dc2626;background:#dc2626;color:#fff;animation:alertPulse 1.2s ease-in-out infinite}
+.alert-card.active .alert-head,.alert-card.active .alert-status,.alert-card.active .alert-reason{color:#fff}
+@keyframes alertPulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.6)}50%{box-shadow:0 0 0 10px rgba(220,38,38,0)}}
+.alert-head{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.alert-status{font-family:var(--sans);font-weight:800;font-size:18px;color:var(--dim);line-height:1.1}
+.alert-card.clear .alert-status{color:var(--green)}
+.alert-reason{font-family:var(--mono);font-size:11px;color:var(--muted);min-height:13px}
+.alert-head{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.rpu-badge{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;padding:2px 6px;border-radius:3px;
+  border:1px solid var(--mid);color:var(--muted);background:var(--bg1);text-transform:uppercase;white-space:nowrap}
+.rpu-badge.pending{border-color:#d4a017;color:#d4a017;background:rgba(212,160,23,.08)}
+.rpu-badge.ack{border-color:var(--green);color:var(--green);background:rgba(21,128,61,.08)}
+.rpu-badge.idle{visibility:hidden}
+.alert-card.active .rpu-badge{border-color:#fff;color:#fff;background:rgba(255,255,255,.15)}
+.alert-card.active .rpu-badge.ack{background:#15803d;border-color:#15803d}
+
+/* Detection toggle per-channel */
+.det-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-weight:600;font-size:11px;
+  letter-spacing:.05em;padding:7px 10px;border-radius:var(--r);cursor:pointer;border:1px solid var(--mid);
+  background:var(--bg1);color:var(--muted);transition:all .15s;white-space:nowrap}
+.det-btn:hover{border-color:var(--dim)}
+.det-btn .det-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);transition:background .15s,box-shadow .15s}
+.det-btn.on{background:rgba(21,128,61,.1);border-color:var(--green);color:var(--green)}
+.det-btn.on .det-dot{background:var(--green);box-shadow:0 0 6px var(--green)}
+.det-btn.off{background:rgba(107,114,128,.1);border-color:var(--muted);color:var(--muted)}
+.det-btn.off .det-dot{background:var(--muted)}
+.det-btn:disabled{opacity:.5;cursor:wait}
+
+/* Actions */
+.actions{padding:16px 20px;display:flex;gap:10px;border-bottom:1px solid var(--line);background:var(--bg1)}
+.act-btn{flex:1;font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:.04em;text-transform:uppercase;
+  padding:13px 16px;border-radius:var(--r);cursor:pointer;border:none;transition:all .2s}
+.act-btn.start{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;box-shadow:0 2px 10px rgba(22,163,74,.25)}
+.act-btn.start:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(22,163,74,.35)}
+.act-btn.stop{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;box-shadow:0 2px 10px rgba(220,38,38,.25)}
+.act-btn.stop:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(220,38,38,.35)}
+.act-btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+
+/* FPS Panel */
+.fps-panel{padding:10px 14px;background:var(--bg1);border-bottom:1px solid var(--line)}
+.fps-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.fps-cell{background:var(--bg0);border:1px solid var(--line);border-radius:var(--r);padding:8px 6px;text-align:center}
+.fps-cell.inactive{opacity:.22}
+.fps-ch{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.1em;margin-bottom:2px}
+.fps-val{font-family:var(--sans);font-weight:800;font-size:20px;color:var(--dim);line-height:1.1}
+.fps-val.live{color:var(--green)}
+.fps-val.warn{color:var(--yellow)}
+.fps-val.dead{color:var(--red)}
+.fps-avg{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:2px}
+.fps-model{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.04em;margin-top:3px;color:var(--muted)}
+.fps-model.refinedet{color:var(--person)}
+.fps-model.densebox{color:var(--face)}
+
+/* Latency Panel */
+.lat-panel{padding:10px 14px;background:var(--bg1);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.lat-empty{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center;padding:16px 0}
+.lat-row{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:8px 10px}
+.lat-row.inactive{opacity:.35}
+.lat-row-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.lat-ch{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--dim);letter-spacing:.08em}
+.lat-e2e{font-family:var(--sans);font-weight:700;font-size:13px;color:var(--accent)}
+.lat-stages{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.lat-stage{display:flex;flex-direction:column;gap:1px;background:var(--bg1);padding:5px 6px;border-radius:3px}
+.lat-name{font-family:var(--mono);font-size:9px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.lat-val{font-family:var(--sans);font-weight:700;font-size:12px;color:var(--text)}
+.lat-unit{font-family:var(--mono);font-size:9px;color:var(--muted);margin-left:2px}
+
+/* Log Panel */
+.log-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.log-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--bg2);border-bottom:1px solid var(--line)}
+.log-title{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.log-clear{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--dim);cursor:pointer;padding:4px 10px;border:1px solid var(--mid);border-radius:var(--r);background:var(--bg1);transition:all .15s}
+.log-clear:hover{border-color:var(--accent);color:var(--accent)}
+.log-body{flex:1;overflow-y:auto;padding:10px 14px;font-family:var(--mono);font-size:12px;line-height:1.55;background:var(--bg1);color:var(--dim)}
+.log-line{color:var(--dim);padding:1px 0;border-left:2px solid transparent;padding-left:8px}
+.log-line.server{color:var(--accent);border-color:var(--accent)}
+.log-line.error{color:var(--red);border-color:var(--red)}
+.log-line.warn{color:var(--yellow);border-color:var(--yellow)}
+.log-line.new{animation:logIn .3s ease-out}
+@keyframes logIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+
+/* Stats bar */
+.stats-bar{display:flex;gap:16px;padding:8px 16px;background:var(--bg2);border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted)}
+.stat-item{display:flex;gap:6px}
+.stat-label{color:var(--dim)}
+.stat-val{color:var(--text)}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);backdrop-filter:blur(2px);z-index:300;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg1);border:1px solid var(--line);border-radius:8px;width:90%;max-width:560px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(15,23,42,.18)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line)}
+.modal-title{font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:.02em;color:var(--accent)}
+.modal-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px 8px}
+.modal-close:hover{color:var(--text)}
+.modal-body{flex:1;overflow-y:auto;padding:16px 20px}
+.modal-search{width:100%;padding:10px 12px;background:var(--bg2);border:1px solid var(--mid);border-radius:var(--r);color:var(--text);font-family:var(--mono);font-size:13px;margin-bottom:12px}
+.modal-search:focus{outline:none;border-color:var(--accent)}
+.file-list{display:flex;flex-direction:column;gap:4px}
+.file-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border:1px solid transparent;border-radius:var(--r);cursor:pointer;transition:all .15s}
+.file-item:hover{border-color:var(--accent);background:rgba(0,229,255,.05)}
+.file-icon{font-size:18px}
+.file-name{font-family:var(--sans);font-size:14px;font-weight:500;color:var(--text)}
+.file-path{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:2px}
+.file-empty{text-align:center;padding:30px;color:var(--muted);font-family:var(--mono);font-size:13px}
+.modal-footer{padding:12px 20px;border-top:1px solid var(--line);display:flex;gap:8px}
+.modal-footer input{flex:1;padding:9px 12px;background:var(--bg2);border:1px solid var(--mid);border-radius:var(--r);color:var(--text);font-family:var(--mono);font-size:13px}
+.modal-footer input:focus{outline:none;border-color:var(--accent)}
+.modal-footer button{padding:9px 18px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-family:var(--sans);font-weight:600;font-size:13px;cursor:pointer}
+
+/* Toast */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--bg1);border:1px solid var(--line);padding:12px 24px;border-radius:var(--r);font-family:var(--mono);font-size:13px;color:var(--text);opacity:0;transition:all .3s;z-index:400;box-shadow:0 10px 40px rgba(15,23,42,.15)}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.success{border-color:var(--green);color:var(--green)}
+.toast.error{border-color:var(--red);color:var(--red)}
+
+/* Tab bar */
+.tabs{display:flex;gap:6px;margin-left:24px}
+.tab-btn{font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:.02em;padding:7px 14px;
+  border:1px solid var(--mid);border-radius:var(--r);background:var(--bg2);color:var(--muted);cursor:pointer;transition:all .15s}
+.tab-btn:hover{color:var(--text);border-color:var(--dim)}
+.tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Stats tab */
+.stats-view{max-width:1300px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stats-row:has(.stats-panel){grid-template-columns:1fr 1fr}
+
+.stat-tile{background:var(--bg1);border:1px solid var(--line);border-radius:7px;padding:14px 16px;
+  display:flex;flex-direction:column;gap:4px;box-shadow:0 1px 3px rgba(15,23,42,.04)}
+.stat-tile.wide{grid-column:span 1}
+.tile-label{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.tile-val{font-family:var(--sans);font-weight:800;font-size:28px;color:var(--text);display:flex;align-items:baseline;gap:5px}
+.tile-unit{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--muted)}
+.tile-sub{font-family:var(--mono);font-size:12px;color:var(--dim)}
+
+.stats-panel{background:var(--bg1);border:1px solid var(--line);border-radius:7px;padding:16px;
+  display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(15,23,42,.04)}
+.stats-panel.wide{grid-column:span 4}
+.panel-title{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid var(--line)}
+
+/* CPU grid */
+.cpu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cpu-cell{display:flex;flex-direction:column;gap:4px;padding:8px 10px;background:var(--bg2);border-radius:var(--r)}
+.cpu-top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--dim);align-items:center}
+.cpu-pct{font-family:var(--sans);font-weight:700;font-size:16px;color:var(--text)}
+.cpu-bar{width:100%;height:6px;border-radius:3px;background:var(--bg3);overflow:hidden}
+.cpu-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green),var(--accent));transition:width .4s}
+.cpu-freq{font-family:var(--mono);font-size:10px;color:var(--muted)}
+
+/* Temperatures */
+.temp-list{display:flex;flex-direction:column;gap:10px}
+.temp-row{display:grid;grid-template-columns:80px 1fr 60px;gap:12px;align-items:center}
+.temp-name{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--dim)}
+.temp-bar{height:8px;border-radius:4px;background:var(--bg3);overflow:hidden}
+.temp-fill{height:100%;border-radius:4px;transition:width .4s, background .4s}
+.temp-val{font-family:var(--sans);font-weight:700;font-size:14px;color:var(--text);text-align:right}
+
+/* Memory */
+.mem-block{display:flex;flex-direction:column;gap:5px}
+.mem-label{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+.mem-bar{height:10px;border-radius:5px;background:var(--bg3);overflow:hidden}
+.mem-fill{height:100%;background:linear-gradient(90deg,var(--accent),#2563eb);transition:width .4s}
+.mem-kv{font-family:var(--mono);font-size:12px;color:var(--dim)}
+
+/* Compute units */
+.cu-list{display:flex;flex-direction:column;gap:8px}
+.cu-row{display:grid;grid-template-columns:1fr 80px 80px;gap:10px;align-items:center;
+  background:var(--bg2);padding:9px 12px;border-radius:var(--r)}
+.cu-name{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cu-status{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 8px;border-radius:3px;text-align:center}
+.cu-status.idle{background:rgba(107,114,128,.15);color:var(--muted)}
+.cu-status.busy{background:rgba(21,128,61,.15);color:var(--green)}
+.cu-usage{font-family:var(--mono);font-size:12px;color:var(--dim);text-align:right}
+
+/* Voltages */
+.volt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.volt-cell{background:var(--bg2);padding:8px 12px;border-radius:var(--r);display:flex;flex-direction:column;gap:2px}
+.volt-name{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.04em}
+.volt-val{font-family:var(--sans);font-weight:700;font-size:15px;color:var(--text)}
+
+/* Top stats row: 5 tiles (with RPU) */
+.stats-row.top5{grid-template-columns:repeat(5,1fr) !important}
+
+/* Fan control */
+.fan-panel{display:flex;gap:18px;align-items:center}
+.fan-controls{flex:1;display:flex;flex-direction:column;gap:10px}
+.fan-row{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.fan-pct{font-family:var(--sans);font-weight:800;font-size:24px;color:var(--text)}
+.fan-pct .unit{font-family:var(--mono);font-size:13px;color:var(--muted);font-weight:600;margin-left:3px}
+.fan-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;
+  background:linear-gradient(90deg,var(--green) 0%,#f59e0b 60%,var(--red) 100%);
+  outline:none;cursor:pointer}
+.fan-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--bg1);border:2px solid var(--accent);cursor:pointer;box-shadow:0 1px 4px rgba(15,23,42,.15)}
+.fan-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;
+  background:var(--bg1);border:2px solid var(--accent);cursor:pointer}
+.fan-presets{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.fan-preset{padding:5px 10px;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);
+  font-family:var(--mono);font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s}
+.fan-preset:hover{border-color:var(--accent);color:var(--text)}
+.fan-mode{margin-left:auto;display:inline-flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.fan-mode button{padding:5px 12px;background:var(--bg2);border:none;color:var(--muted);
+  font-family:var(--mono);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.06em}
+.fan-mode button.active{background:var(--accent);color:#fff}
+.fan-mode-note{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:2px}
+
+/* LED source (ch 0) */
+.led-mode-panel{padding:10px 14px;background:var(--bg1);border-bottom:1px solid var(--line)}
+.led-mode-row{display:flex;align-items:center;gap:12px}
+.led-pin-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--line);
+  border-radius:var(--r);font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--bg2)}
+.led-dot{width:8px;height:8px;border-radius:50%;background:#3a3a3a;box-shadow:inset 0 0 3px rgba(0,0,0,.4)}
+.led-dot.on{background:#dc2626;box-shadow:0 0 8px rgba(220,38,38,.85)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-mark">Edge Vision AI</span>
+    <span class="logo-sub">AMD Kria KV260</span>
+  </div>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="detection" onclick="switchTab('detection')">Detection</button>
+    <button class="tab-btn" data-tab="stats" onclick="switchTab('stats')">Board Stats</button>
+  </nav>
+  <div class="header-right">
+    <div class="status-pill">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">STOPPED</span>
+    </div>
+    <div class="uptime" id="uptime">00:00:00</div>
+    <a class="tool-btn" href="/logout" style="text-decoration:none">Logout</a>
+  </div>
+</header>
+
+<main id="mainDetection">
+  <div class="left">
+    <div class="sec">Layout Editor</div>
+    <div class="editor-wrap">
+      <div class="editor-toolbar">
+        <span class="editor-toolbar-label">Channels</span>
+        <div class="cnt-btns">
+          <button class="cnt-btn" onclick="setNumChannels(1)">1</button>
+          <button class="cnt-btn" onclick="setNumChannels(2)">2</button>
+          <button class="cnt-btn" onclick="setNumChannels(3)">3</button>
+          <button class="cnt-btn active" onclick="setNumChannels(4)">4</button>
+        </div>
+        <button class="tool-btn" onclick="resetLayout()">Reset</button>
+        <div class="mode-toggle">
+          <button class="mode-btn active" id="modeLayout" onclick="setEditorMode('layout')">LAYOUT</button>
+          <button class="mode-btn" id="modeZoneRect" onclick="setEditorMode('zone-rect')">+ ZONE</button>
+          <button class="tool-btn" onclick="clearZones()" title="Clear zones on selected channel">Clear Zones</button>
+          <button class="mode-btn active" id="showOverlayBtn" onclick="toggleZoneOverlay()" title="Draw zones on the video output">
+            SHOW ON VIDEO
+          </button>
+        </div>
+        <span class="editor-toolbar-label" style="margin-left:auto">LED</span>
+        <div class="fan-mode" title="LED source for CH 0 alert">
+          <button id="ledModeApu" onclick="setLedMode('apu')">APU</button>
+          <button id="ledModeRpu" onclick="setLedMode('rpu')">RPU</button>
+        </div>
+        <div class="led-pin-pill" title="gpio 504 value (AXI GPIO line 0 / PMOD J2 H12)">
+          <span class="led-dot" id="ledPinDot"></span>
+          <span id="ledPinLabel">pin: —</span>
+        </div>
+      </div>
+      <div class="canvas-outer" id="canvas"></div>
+      <div class="coord-bar" id="coordBar"></div>
+    </div>
+
+    <div class="sec">Channel Configuration</div>
+    <div class="ch-list" id="chList"></div>
+
+    <div class="actions">
+      <button class="act-btn start" id="btnStart" onclick="startPipeline()">▶ Start Pipeline</button>
+      <button class="act-btn stop" id="btnStop" onclick="stopPipeline()" disabled>■ Stop</button>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="sec">Zone Alerts</div>
+    <div class="alerts-panel" id="alertsPanel">
+      <div class="alert-card clear" id="alert0"><div class="alert-head"><span>CH 0</span><span class="rpu-badge idle">RPU</span></div><div class="alert-status">CLEAR</div><div class="alert-reason">no zones</div></div>
+      <div class="alert-card clear" id="alert1"><div class="alert-head"><span>CH 1</span><span class="rpu-badge idle">RPU</span></div><div class="alert-status">CLEAR</div><div class="alert-reason">no zones</div></div>
+      <div class="alert-card clear" id="alert2"><div class="alert-head"><span>CH 2</span><span class="rpu-badge idle">RPU</span></div><div class="alert-status">CLEAR</div><div class="alert-reason">no zones</div></div>
+      <div class="alert-card clear" id="alert3"><div class="alert-head"><span>CH 3</span><span class="rpu-badge idle">RPU</span></div><div class="alert-status">CLEAR</div><div class="alert-reason">no zones</div></div>
+    </div>
+
+    <div class="sec">Performance</div>
+    <div class="fps-panel">
+      <div class="fps-grid">
+        <div class="fps-cell" id="fpscell0"><div class="fps-ch">CH 0</div><div class="fps-val" id="fps0val">—</div><div class="fps-avg">avg: <span id="fps0avg">—</span></div><div class="fps-model" id="fps0model">—</div></div>
+        <div class="fps-cell" id="fpscell1"><div class="fps-ch">CH 1</div><div class="fps-val" id="fps1val">—</div><div class="fps-avg">avg: <span id="fps1avg">—</span></div><div class="fps-model" id="fps1model">—</div></div>
+        <div class="fps-cell" id="fpscell2"><div class="fps-ch">CH 2</div><div class="fps-val" id="fps2val">—</div><div class="fps-avg">avg: <span id="fps2avg">—</span></div><div class="fps-model" id="fps2model">—</div></div>
+        <div class="fps-cell" id="fpscell3"><div class="fps-ch">CH 3</div><div class="fps-val" id="fps3val">—</div><div class="fps-avg">avg: <span id="fps3avg">—</span></div><div class="fps-model" id="fps3model">—</div></div>
+      </div>
+    </div>
+
+    <div class="sec">Latency Breakdown (ms)</div>
+    <div class="lat-panel" id="latPanel">
+      <div class="lat-empty">Start the pipeline to collect latency data.</div>
+    </div>
+
+    <div class="sec">Pipeline Logs</div>
+    <div class="log-wrap">
+      <div class="log-header">
+        <span class="log-title">Output</span>
+        <button class="log-clear" onclick="clearLogs()">Clear</button>
+      </div>
+      <div class="log-body" id="logBody"></div>
+      <div class="stats-bar">
+        <div class="stat-item"><span class="stat-label">Lines:</span><span class="stat-val" id="statLines">0</span></div>
+        <div class="stat-item"><span class="stat-label">Uptime:</span><span class="stat-val" id="statUptime">—</span></div>
+        <div class="stat-item"><span class="stat-label">PID:</span><span class="stat-val" id="statPid">—</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main id="mainStats" style="display:none;overflow-y:auto">
+  <div class="stats-view">
+    <div class="stats-row top5">
+      <div class="stat-tile wide">
+        <div class="tile-label">POWER</div>
+        <div class="tile-val" id="sPower">—<span class="tile-unit">W</span></div>
+        <div class="tile-sub" id="sCurrent">—</div>
+      </div>
+      <div class="stat-tile"><div class="tile-label">CPU LOAD (AVG)</div><div class="tile-val" id="sCpuAvg">—<span class="tile-unit">%</span></div><div class="tile-sub" id="sLoadAvg">—</div></div>
+      <div class="stat-tile"><div class="tile-label">DPU</div><div class="tile-val" id="sDpu">—</div><div class="tile-sub" id="sDpuRate">—</div></div>
+      <div class="stat-tile"><div class="tile-label">RPU (R5)</div><div class="tile-val" id="sRpu">—</div><div class="tile-sub" id="sRpuSub">—</div><div class="tile-sub" id="sRpuShm" style="font-size:11px">—</div></div>
+      <div class="stat-tile"><div class="tile-label">UPTIME</div><div class="tile-val" id="sUptime">—</div><div class="tile-sub">system</div></div>
+    </div>
+
+    <div class="stats-row" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="stats-panel">
+        <div class="panel-title">APU Cores (Cortex-A53)</div>
+        <div class="cpu-grid" id="cpuGrid"></div>
+      </div>
+      <div class="stats-panel">
+        <div class="panel-title">RPU Cores (Cortex-R5F)</div>
+        <div class="cpu-grid" id="rpuGrid"></div>
+      </div>
+      <div class="stats-panel">
+        <div class="panel-title">Temperatures</div>
+        <div class="temp-list" id="tempList"></div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stats-panel">
+        <div class="panel-title">Memory</div>
+        <div class="mem-block">
+          <div class="mem-label">DDR</div>
+          <div class="mem-bar"><div id="memBar" class="mem-fill"></div></div>
+          <div class="mem-kv" id="memKV">—</div>
+        </div>
+        <div class="mem-block">
+          <div class="mem-label">CMA (DMA buffers)</div>
+          <div class="mem-bar"><div id="cmaBar" class="mem-fill"></div></div>
+          <div class="mem-kv" id="cmaKV">—</div>
+        </div>
+      </div>
+      <div class="stats-panel">
+        <div class="panel-title">Compute Units</div>
+        <div class="cu-list" id="cuList"></div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stats-panel wide">
+        <div class="panel-title">Fan Control (PWM)</div>
+        <div class="fan-panel">
+          <div class="fan-controls">
+            <div class="fan-row">
+              <span>Duty cycle</span>
+              <span class="fan-pct" id="fanPct">—<span class="unit">%</span></span>
+            </div>
+            <input class="fan-slider" id="fanSlider" type="range" min="0" max="100" value="30"/>
+            <div class="fan-row">
+              <span id="fanPwmRaw">pwm: — / 255</span>
+              <span id="fanRpmEst">spin: — rpm</span>
+            </div>
+            <div class="fan-presets">
+              <button class="fan-preset" onclick="setFan(10)">Min 10%</button>
+              <button class="fan-preset" onclick="setFan(25)">Quiet 25%</button>
+              <button class="fan-preset" onclick="setFan(50)">50%</button>
+              <button class="fan-preset" onclick="setFan(75)">75%</button>
+              <button class="fan-preset" onclick="setFan(100)">Max</button>
+              <div class="fan-mode">
+                <button id="fanModeAuto"   onclick="setFanMode('auto')">AUTO</button>
+                <button id="fanModeManual" onclick="setFanMode('manual')">MANUAL</button>
+              </div>
+            </div>
+            <div class="fan-mode-note" id="fanModeNote">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stats-panel wide">
+        <div class="panel-title">Voltage Rails (mV)</div>
+        <div class="volt-grid" id="voltGrid"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- File Picker Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="maybeCloseModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Select File</span>
+      <button class="modal-close" onclick="closePicker()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="text" class="modal-search" id="modalSearch" placeholder="Search files..." oninput="filterFiles()"/>
+      <div class="file-list" id="fileList"></div>
+    </div>
+    <div class="modal-footer">
+      <input type="text" id="manualPath" placeholder="Or enter path manually..."/>
+      <button onclick="applyManual()">Apply</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DISPLAY_W = 1920, DISPLAY_H = 1080;
+const MODEL_LABELS = {
+  refinedet: 'Person (RefineDet)',
+  densebox: 'Face (DenseBox)'
+};
+const MODEL_COLORS = {
+  refinedet: 'person',
+  densebox: 'face'
+};
+
+let numChannels = 4;
+let selectedCh = 0;
+let chState = [];
+let allFiles = [];
+let pickerCh = 0;
+let logCursor = 0;
+let logLineCount = 0;
+let startTimestamp = null;
+let uptimeInterval = null;
+let isRunning = false;
+
+// Initialize channel state
+for (let i = 0; i < 4; i++) {
+  chState.push({
+    video: '/home/petalinux/test_videos/walking.mp4',
+    model: 'refinedet',
+    detect: true,
+    rect: { x: (i % 2) * 960, y: Math.floor(i / 2) * 540, w: 960, h: 540 },
+    zones: []
+  });
+}
+
+let editorMode = 'layout';   // 'layout' | 'zone-rect'
+let drawingZone = null;      // { ch, type, startX, startY, tempEl }
+
+function buildCanvas() {
+  const canvas = document.getElementById('canvas');
+  const aspect = DISPLAY_W / DISPLAY_H;
+  canvas.style.aspectRatio = `${DISPLAY_W}/${DISPLAY_H}`;
+  canvas.innerHTML = '';
+  
+  for (let i = 0; i < 4; i++) {
+    const win = document.createElement('div');
+    win.className = 'ch-win';
+    win.id = `chwin${i}`;
+    win.innerHTML = `
+      <div class="win-label">CH ${i}</div>
+      <div class="win-file" id="winfile${i}"></div>
+      <div class="win-badge ${chState[i].model}" id="winbadge${i}">${MODEL_LABELS[chState[i].model] || chState[i].model}</div>
+      <div class="win-rect" id="winrect${i}"></div>
+      <div class="rh rh-se" data-dir="se"></div>
+      <div class="rh rh-sw" data-dir="sw"></div>
+      <div class="rh rh-ne" data-dir="ne"></div>
+      <div class="rh rh-nw" data-dir="nw"></div>
+    `;
+    win.onclick = (e) => { if (!e.target.classList.contains('rh')) selectChannel(i); };
+    setupDrag(win, i);
+    canvas.appendChild(win);
+  }
+  buildChannelList();
+}
+
+function buildChannelList() {
+  const list = document.getElementById('chList');
+  list.innerHTML = '';
+  for (let i = 0; i < 4; i++) {
+    const row = document.createElement('div');
+    row.className = 'ch-row' + (i >= numChannels ? ' inactive' : '');
+    row.id = `chrow${i}`;
+    row.innerHTML = `
+      <div class="ch-top">
+        <div class="ch-label">Channel ${i}<span>Plane ${34 + i}</span></div>
+        <input type="text" class="ch-input" id="ch${i}" placeholder="Video path or /dev/videoN..." value="${chState[i].video}" onchange="onVideoChange(${i})"/>
+        <div class="src-toggle">
+          <button class="src-btn ${!isWebcam(chState[i].video) ? 'active' : ''}" onclick="openPicker(${i})" title="Pick a file">FILE</button>
+          <button class="src-btn ${isWebcam(chState[i].video) ? 'active' : ''}" onclick="openWebcamPicker(${i})" title="Pick a webcam">WEBCAM</button>
+        </div>
+      </div>
+      <div class="ch-bottom">
+        <span class="mtog-label">Model</span>
+        <div class="mtog">
+          <button class="mbtn ${chState[i].model === 'refinedet' ? 'ap' : ''}" onclick="setModel(${i},'refinedet')">Person</button>
+          <button class="mbtn ${chState[i].model === 'densebox' ? 'af' : ''}" onclick="setModel(${i},'densebox')">Face</button>
+        </div>
+        <button class="det-btn ${chState[i].detect ? 'on' : 'off'}" id="detbtn${i}" onclick="toggleDetect(${i})" title="Toggle detection on/off">
+          <span class="det-dot"></span>${chState[i].detect ? 'DETECT ON' : 'DETECT OFF'}
+        </button>
+      </div>
+    `;
+    list.appendChild(row);
+  }
+}
+
+function setNumChannels(n) {
+  numChannels = n;
+  document.querySelectorAll('.cnt-btn').forEach((b, i) => b.classList.toggle('active', i + 1 === n));
+  
+  for (let i = 0; i < 4; i++) {
+    const win = document.getElementById(`chwin${i}`);
+    const row = document.getElementById(`chrow${i}`);
+    const cell = document.getElementById(`fpscell${i}`);
+    if (win) win.style.display = i < n ? 'flex' : 'none';
+    if (row) row.classList.toggle('inactive', i >= n);
+    if (cell) cell.classList.toggle('inactive', i >= n);
+  }
+  
+  resetLayout();
+  if (selectedCh >= n) selectChannel(0);
+}
+
+function resetLayout() {
+  const layouts = {
+    1: [{ x: 0, y: 0, w: 1920, h: 1080 }],
+    2: [{ x: 0, y: 0, w: 960, h: 1080 }, { x: 960, y: 0, w: 960, h: 1080 }],
+    3: [{ x: 0, y: 0, w: 960, h: 540 }, { x: 960, y: 0, w: 960, h: 540 }, { x: 0, y: 540, w: 960, h: 540 }],
+    4: [{ x: 0, y: 0, w: 960, h: 540 }, { x: 960, y: 0, w: 960, h: 540 }, { x: 0, y: 540, w: 960, h: 540 }, { x: 960, y: 540, w: 960, h: 540 }]
+  };
+  const l = layouts[numChannels];
+  for (let i = 0; i < numChannels; i++) {
+    chState[i].rect = { ...l[i] };
+    positionWin(i);
+  }
+  updateCoordBar();
+}
+
+function positionWin(i) {
+  const canvas = document.getElementById('canvas');
+  const win = document.getElementById(`chwin${i}`);
+  if (!canvas || !win) return;
+  
+  const cw = canvas.offsetWidth, ch = canvas.offsetHeight;
+  const scaleX = cw / DISPLAY_W, scaleY = ch / DISPLAY_H;
+  const r = chState[i].rect;
+  
+  win.style.left = (r.x * scaleX) + 'px';
+  win.style.top = (r.y * scaleY) + 'px';
+  win.style.width = (r.w * scaleX) + 'px';
+  win.style.height = (r.h * scaleY) + 'px';
+  
+  const fileEl = document.getElementById(`winfile${i}`);
+  const rectEl = document.getElementById(`winrect${i}`);
+  const badgeEl = document.getElementById(`winbadge${i}`);
+  
+  if (fileEl) fileEl.textContent = chState[i].video.split('/').pop();
+  if (rectEl) rectEl.textContent = `${r.x},${r.y} ${r.w}×${r.h}`;
+  if (badgeEl) {
+    badgeEl.textContent = MODEL_LABELS[chState[i].model] || chState[i].model;
+    badgeEl.className = 'win-badge ' + chState[i].model;
+  }
+  
+  // Update window color based on model
+  win.classList.remove('face-model');
+  if (chState[i].model === 'densebox') win.classList.add('face-model');
+
+  renderZones(i);
+}
+
+// ---------------------------------------------------------------------------
+// Zone drawing & rendering
+// ---------------------------------------------------------------------------
+
+let zoneOverlayOn = true;
+
+async function toggleZoneOverlay() {
+  zoneOverlayOn = !zoneOverlayOn;
+  const btn = document.getElementById('showOverlayBtn');
+  if (btn) {
+    btn.classList.toggle('active', zoneOverlayOn);
+    btn.textContent = zoneOverlayOn ? 'SHOW ON VIDEO' : 'HIDE ON VIDEO';
+  }
+  try {
+    const res = await fetch('/api/pipeline/zone_overlay', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ show: zoneOverlayOn })
+    });
+    const data = await res.json();
+    showToast(`Zone overlay: ${data.show ? 'ON' : 'OFF'}`, 'success');
+  } catch (e) {
+    showToast('Overlay toggle failed', 'error');
+  }
+}
+
+function setEditorMode(mode) {
+  editorMode = mode;
+  document.getElementById('modeLayout').classList.toggle('active', mode === 'layout');
+  document.getElementById('modeZoneRect').classList.toggle('active', mode === 'zone-rect');
+  const canvas = document.getElementById('canvas');
+  canvas.classList.toggle('zone-mode', mode !== 'layout');
+}
+
+function clearZones() {
+  const ch = selectedCh;
+  chState[ch].zones = [];
+  renderZones(ch);
+  postZones(ch);
+  showToast(`CH ${ch}: zones cleared`, 'success');
+}
+
+async function postZones(ch) {
+  try {
+    await fetch('/api/pipeline/zones', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ch, zones: chState[ch].zones })
+    });
+  } catch (e) { /* non-fatal */ }
+}
+
+function renderZones(ch) {
+  const win = document.getElementById(`chwin${ch}`);
+  if (!win) return;
+  // Remove any prior zone shapes for this channel
+  win.querySelectorAll('.zone-shape').forEach(el => el.remove());
+
+  const canvas = document.getElementById('canvas');
+  const scaleX = canvas.offsetWidth / DISPLAY_W;
+  const scaleY = canvas.offsetHeight / DISPLAY_H;
+  const rect = chState[ch].rect;
+
+  chState[ch].zones.forEach((z, idx) => {
+    if (z.type === 'rect') {
+      const el = document.createElement('div');
+      el.className = 'zone-shape zone-rect';
+      // zones are stored in channel-local (render-rectangle) coords
+      el.style.left = (z.x * scaleX) + 'px';
+      el.style.top  = (z.y * scaleY) + 'px';
+      el.style.width  = (z.w * scaleX) + 'px';
+      el.style.height = (z.h * scaleY) + 'px';
+      const lbl = document.createElement('div');
+      lbl.className = 'zone-label';
+      lbl.textContent = z.name || `zone ${idx+1}`;
+      el.appendChild(lbl);
+      win.appendChild(el);
+    } else if (z.type === 'line') {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'zone-shape');
+      svg.style.left = '0'; svg.style.top = '0';
+      svg.style.width = '100%'; svg.style.height = '100%';
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('class', 'zone-line');
+      line.setAttribute('x1', z.x1 * scaleX);
+      line.setAttribute('y1', z.y1 * scaleY);
+      line.setAttribute('x2', z.x2 * scaleX);
+      line.setAttribute('y2', z.y2 * scaleY);
+      svg.appendChild(line);
+      win.appendChild(svg);
+    }
+  });
+}
+
+function beginZoneDraw(ch, evt) {
+  const win = document.getElementById(`chwin${ch}`);
+  const rect = win.getBoundingClientRect();
+  const x = evt.clientX - rect.left;
+  const y = evt.clientY - rect.top;
+  const tempEl = document.createElement('div');
+  tempEl.className = 'zone-shape zone-rect';
+  tempEl.style.left = x + 'px';
+  tempEl.style.top = y + 'px';
+  tempEl.style.width = '0px';
+  tempEl.style.height = '0px';
+  win.appendChild(tempEl);
+  drawingZone = { ch, type: 'rect', startX: x, startY: y, tempEl };
+  document.addEventListener('mousemove', updateZoneDraw);
+  document.addEventListener('mouseup', endZoneDraw);
+  evt.preventDefault(); evt.stopPropagation();
+}
+
+function updateZoneDraw(evt) {
+  if (!drawingZone) return;
+  const win = document.getElementById(`chwin${drawingZone.ch}`);
+  const rect = win.getBoundingClientRect();
+  const x = Math.max(0, Math.min(rect.width, evt.clientX - rect.left));
+  const y = Math.max(0, Math.min(rect.height, evt.clientY - rect.top));
+  if (drawingZone.type === 'rect') {
+    const x0 = Math.min(drawingZone.startX, x), y0 = Math.min(drawingZone.startY, y);
+    const x1 = Math.max(drawingZone.startX, x), y1 = Math.max(drawingZone.startY, y);
+    drawingZone.tempEl.style.left = x0 + 'px';
+    drawingZone.tempEl.style.top = y0 + 'px';
+    drawingZone.tempEl.style.width = (x1 - x0) + 'px';
+    drawingZone.tempEl.style.height = (y1 - y0) + 'px';
+  } else {
+    const line = drawingZone.tempEl.querySelector('line');
+    line.setAttribute('x2', x);
+    line.setAttribute('y2', y);
+  }
+}
+
+function endZoneDraw(evt) {
+  if (!drawingZone) return;
+  document.removeEventListener('mousemove', updateZoneDraw);
+  document.removeEventListener('mouseup', endZoneDraw);
+  const { ch, type, startX, startY, tempEl } = drawingZone;
+  drawingZone = null;
+  const win = document.getElementById(`chwin${ch}`);
+  const rect = win.getBoundingClientRect();
+  const endX = Math.max(0, Math.min(rect.width, evt.clientX - rect.left));
+  const endY = Math.max(0, Math.min(rect.height, evt.clientY - rect.top));
+  // Convert display-pixel coords to channel-local (render-rectangle) coords
+  const canvas = document.getElementById('canvas');
+  const localScaleX = chState[ch].rect.w / (chState[ch].rect.w * canvas.offsetWidth / DISPLAY_W);
+  const localScaleY = chState[ch].rect.h / (chState[ch].rect.h * canvas.offsetHeight / DISPLAY_H);
+  // Equivalently: convert pixel delta inside the channel window to channel-local pixels
+  const rx = chState[ch].rect.w / win.offsetWidth;
+  const ry = chState[ch].rect.h / win.offsetHeight;
+
+  const x0 = Math.round(Math.min(startX, endX) * rx);
+  const y0 = Math.round(Math.min(startY, endY) * ry);
+  const w  = Math.round(Math.abs(endX - startX) * rx);
+  const h  = Math.round(Math.abs(endY - startY) * ry);
+  tempEl.remove();
+  if (w < 12 || h < 12) return;  // ignore tiny accidental drags
+  chState[ch].zones.push({ type: 'rect', name: `zone ${chState[ch].zones.length+1}`, x: x0, y: y0, w, h });
+  renderZones(ch);
+  postZones(ch);
+}
+
+function selectChannel(i) {
+  selectedCh = i;
+  document.querySelectorAll('.ch-win').forEach((w, idx) => w.classList.toggle('selected', idx === i));
+  document.querySelectorAll('.ch-row').forEach((r, idx) => {
+    r.classList.toggle('selected-row', idx === i);
+    r.classList.toggle('face-row', chState[idx].model === 'densebox');
+  });
+  updateCoordBar();
+}
+
+function updateCoordBar() {
+  const r = chState[selectedCh].rect;
+  document.getElementById('coordBar').innerHTML = `
+    <span class="coord-item">CH <span>${selectedCh}</span></span>
+    <span class="coord-item">X <span>${r.x}</span></span>
+    <span class="coord-item">Y <span>${r.y}</span></span>
+    <span class="coord-item">W <span>${r.w}</span></span>
+    <span class="coord-item">H <span>${r.h}</span></span>
+  `;
+}
+
+function setModel(ch, model) {
+  chState[ch].model = model;
+  const row = document.getElementById(`chrow${ch}`);
+  row.querySelectorAll('.mbtn').forEach(b => {
+    b.classList.remove('ap', 'af');
+    if (b.textContent.toLowerCase().includes('person') && model === 'refinedet') b.classList.add('ap');
+    if (b.textContent.toLowerCase().includes('face') && model === 'densebox') b.classList.add('af');
+  });
+  positionWin(ch);
+  selectChannel(ch);
+}
+
+function onVideoChange(ch) {
+  chState[ch].video = document.getElementById(`ch${ch}`).value;
+  positionWin(ch);
+  // Update File/Webcam source-toggle button states in the affected row
+  const row = document.getElementById(`chrow${ch}`);
+  if (row) {
+    const btns = row.querySelectorAll('.src-btn');
+    const isCam = isWebcam(chState[ch].video);
+    if (btns.length >= 2) {
+      btns[0].classList.toggle('active', !isCam);
+      btns[1].classList.toggle('active', isCam);
+    }
+  }
+}
+
+function setupDrag(win, ch) {
+  let startX, startY, startRect, mode = null;
+
+  const onDown = (e) => {
+    // In zone-drawing mode, hand the event off to the zone drawer instead.
+    if (editorMode !== 'layout' && !e.target.classList.contains('rh')) {
+      selectChannel(ch);
+      beginZoneDraw(ch, e);
+      return;
+    }
+    if (e.target.classList.contains('rh')) {
+      mode = e.target.dataset.dir;
+    } else {
+      mode = 'move';
+    }
+    startX = e.clientX;
+    startY = e.clientY;
+    startRect = { ...chState[ch].rect };
+    selectChannel(ch);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    e.preventDefault();
+  };
+  
+  const onMove = (e) => {
+    const canvas = document.getElementById('canvas');
+    const scaleX = DISPLAY_W / canvas.offsetWidth;
+    const scaleY = DISPLAY_H / canvas.offsetHeight;
+    let dx = Math.round((e.clientX - startX) * scaleX);
+    let dy = Math.round((e.clientY - startY) * scaleY);
+    
+    let r = { ...startRect };
+    
+    if (mode === 'move') {
+      r.x = Math.max(0, Math.min(DISPLAY_W - r.w, startRect.x + dx));
+      r.y = Math.max(0, Math.min(DISPLAY_H - r.h, startRect.y + dy));
+    } else {
+      if (mode.includes('e')) { r.w = Math.max(160, Math.min(DISPLAY_W - r.x, startRect.w + dx)); }
+      if (mode.includes('w')) { r.x = Math.max(0, startRect.x + dx); r.w = startRect.w - dx; if (r.w < 160) { r.x = startRect.x + startRect.w - 160; r.w = 160; } }
+      if (mode.includes('s')) { r.h = Math.max(90, Math.min(DISPLAY_H - r.y, startRect.h + dy)); }
+      if (mode.includes('n')) { r.y = Math.max(0, startRect.y + dy); r.h = startRect.h - dy; if (r.h < 90) { r.y = startRect.y + startRect.h - 90; r.h = 90; } }
+    }
+    
+    chState[ch].rect = r;
+    positionWin(ch);
+    updateCoordBar();
+  };
+  
+  const onUp = () => {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+    mode = null;
+  };
+  
+  win.addEventListener('mousedown', onDown);
+}
+
+// Pipeline Control
+function buildPayload() {
+  const payload = { num_ch: numChannels, rects: [] };
+  for (let i = 0; i < numChannels; i++) {
+    payload[`ch${i}`] = chState[i].video;
+    payload[`model${i}`] = chState[i].model;
+    payload[`detect${i}`] = chState[i].detect;
+    payload[`zones${i}`] = chState[i].zones || [];
+    payload.rects.push(chState[i].rect);
+  }
+  return payload;
+}
+
+async function startPipeline() {
+  try {
+    const res = await fetch('/api/pipeline/start', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(buildPayload())
+    });
+    const data = await res.json();
+    showToast(data.message, data.ok ? 'success' : 'error');
+    if (data.ok) {
+      startTimestamp = Date.now();
+      startUptimeClock();
+    }
+    pollStatus();
+  } catch (e) {
+    showToast('Failed to start pipeline', 'error');
+  }
+}
+
+async function toggleDetect(ch) {
+  chState[ch].detect = !chState[ch].detect;
+  const btn = document.getElementById(`detbtn${ch}`);
+  if (btn) {
+    btn.classList.toggle('on', chState[ch].detect);
+    btn.classList.toggle('off', !chState[ch].detect);
+    btn.innerHTML = `<span class="det-dot"></span>${chState[ch].detect ? 'DETECT ON' : 'DETECT OFF'}`;
+  }
+
+  // If pipeline isn't running, just update state (will apply on next Start)
+  if (!isRunning) return;
+
+  // Hot-restart pipeline with new detect flags
+  document.querySelectorAll('.det-btn').forEach(b => b.disabled = true);
+  showToast(`Switching CH${ch} to ${chState[ch].detect ? 'DETECT' : 'PASSTHROUGH'}...`, 'success');
+  try {
+    const res = await fetch('/api/pipeline/reconfigure', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(buildPayload())
+    });
+    const data = await res.json();
+    if (!data.ok) showToast(data.message, 'error');
+    pollStatus();
+  } catch (e) {
+    showToast('Toggle failed', 'error');
+  } finally {
+    document.querySelectorAll('.det-btn').forEach(b => b.disabled = false);
+  }
+}
+
+async function stopPipeline() {
+  try {
+    const res = await fetch('/api/pipeline/stop', { method: 'POST' });
+    const data = await res.json();
+    showToast(data.message, data.ok ? 'success' : 'error');
+    if (data.ok) {
+      clearInterval(uptimeInterval);
+      uptimeInterval = null;
+      startTimestamp = null;
+    }
+    pollStatus();
+  } catch (e) {
+    showToast('Failed to stop pipeline', 'error');
+  }
+}
+
+async function pollStatus() {
+  try {
+    const res = await fetch('/api/pipeline/status');
+    const data = await res.json();
+    updateUI(data);
+  } catch (e) {}
+}
+
+function updateUI(data) {
+  const running = data.running;
+  isRunning = running;
+  
+  const dot = document.getElementById('statusDot');
+  const txt = document.getElementById('statusText');
+  const uptime = document.getElementById('uptime');
+  
+  dot.className = 'status-dot ' + (running ? 'running' : 'stopped');
+  txt.textContent = running ? 'RUNNING' : 'STOPPED';
+  uptime.classList.toggle('visible', running);
+  
+  document.getElementById('btnStart').disabled = running;
+  document.getElementById('btnStop').disabled = !running;
+  document.getElementById('statPid').textContent = data.pid || '—';
+  
+  const nc = data.config?.num_ch || numChannels;
+  for (let i = 0; i < 4; i++) {
+    document.getElementById(`fpscell${i}`).classList.toggle('inactive', i >= nc || !running);
+  }
+  
+  updateFpsDisplay(data.fps || [], running, nc);
+  updateLatencyDisplay(data.latency || {}, running, nc);
+}
+
+function updateLatencyDisplay(lat, running, numCh) {
+  const panel = document.getElementById('latPanel');
+  if (!running || !numCh) {
+    panel.innerHTML = '<div class="lat-empty">Start the pipeline to collect latency data.</div>';
+    return;
+  }
+  const stages = [
+    ['vcu_ms',     'VCU'],
+    ['preproc_ms', 'Preproc'],
+    ['infer_ms',   'Infer'],
+    ['overlay_ms', 'Overlay'],
+    ['meta_ms',    'Meta'],
+  ];
+  let html = '';
+  for (let i = 0; i < numCh; i++) {
+    const chData = lat[String(i)] || {};
+    const e2e = chData.e2e_ms;
+    const stagesHtml = stages.map(([k, label]) => {
+      const v = chData[k];
+      return `<div class="lat-stage"><span class="lat-name">${label}</span>
+              <span class="lat-val">${v != null ? v.toFixed(1) : '—'}<span class="lat-unit">ms</span></span></div>`;
+    }).join('');
+    html += `<div class="lat-row">
+      <div class="lat-row-head">
+        <span class="lat-ch">CH ${i}</span>
+        <span class="lat-e2e">end-to-end: ${e2e != null ? e2e.toFixed(1) + ' ms' : '—'}</span>
+      </div>
+      <div class="lat-stages">${stagesHtml}</div>
+    </div>`;
+  }
+  panel.innerHTML = html || '<div class="lat-empty">Waiting for tracer samples…</div>';
+}
+
+function startUptimeClock() {
+  if (uptimeInterval) return;
+  function tick() {
+    if (!startTimestamp) return;
+    const s = Math.floor((Date.now() - startTimestamp) / 1000);
+    const str = [Math.floor(s / 3600), Math.floor((s % 3600) / 60), s % 60].map(v => String(v).padStart(2, '0')).join(':');
+    document.getElementById('statUptime').textContent = str;
+    document.getElementById('uptime').textContent = str;
+  }
+  tick();
+  uptimeInterval = setInterval(tick, 1000);
+}
+
+function updateFpsDisplay(fpsArr, running, activeCh) {
+  const n = activeCh || numChannels;
+  for (let i = 0; i < 4; i++) {
+    const valEl = document.getElementById(`fps${i}val`);
+    const avgEl = document.getElementById(`fps${i}avg`);
+    const mEl = document.getElementById(`fps${i}model`);
+    
+    if (!running || i >= n || !fpsArr[i] || fpsArr[i].fps === null) {
+      valEl.textContent = '—';
+      valEl.className = 'fps-val';
+      avgEl.textContent = '—';
+      mEl.textContent = '—';
+      mEl.className = 'fps-model';
+    } else {
+      const d = fpsArr[i], fps = d.fps;
+      valEl.textContent = fps.toFixed(1);
+      valEl.className = 'fps-val ' + (fps >= 25 ? 'live' : fps >= 15 ? 'warn' : 'dead');
+      avgEl.textContent = d.mean_fps != null ? d.mean_fps.toFixed(1) : '—';
+      const mk = d.model || chState[i].model;
+      mEl.textContent = MODEL_LABELS[mk] || mk || '—';
+      mEl.className = 'fps-model ' + mk;
+    }
+  }
+}
+
+// Logs
+async function pollLogs() {
+  if (!isRunning) return;
+  try {
+    const res = await fetch(`/api/pipeline/logs?since=${logCursor}`);
+    const data = await res.json();
+    if (data.lines && data.lines.length > 0) {
+      appendLogs(data.lines);
+      logCursor = data.total;
+      logLineCount += data.lines.length;
+      document.getElementById('statLines').textContent = logLineCount;
+    }
+  } catch (e) {}
+}
+
+function appendLogs(lines) {
+  const body = document.getElementById('logBody');
+  const atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 20;
+  lines.forEach(line => {
+    const d = document.createElement('div');
+    d.className = 'log-line new ' + classifyLog(line);
+    d.textContent = line;
+    body.appendChild(d);
+  });
+  if (atBottom) body.scrollTop = body.scrollHeight;
+}
+
+function classifyLog(l) {
+  const lower = l.toLowerCase();
+  if (lower.includes('[server]')) return 'server';
+  if (lower.includes('error')) return 'error';
+  if (lower.includes('warn')) return 'warn';
+  return '';
+}
+
+function clearLogs() {
+  document.getElementById('logBody').innerHTML = '';
+  logCursor = 0;
+  logLineCount = 0;
+  document.getElementById('statLines').textContent = '0';
+}
+
+// File Picker
+async function openPicker(ch) {
+  pickerCh = ch;
+  document.getElementById('modalTitle').textContent = `Select File — CH ${ch}`;
+  document.getElementById('modalSearch').value = '';
+  document.getElementById('manualPath').value = chState[ch].video;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('fileList').innerHTML = '<div class="file-empty">Loading...</div>';
+  
+  try {
+    const res = await fetch('/api/files');
+    const data = await res.json();
+    allFiles = data.files || [];
+    renderFileList(allFiles);
+  } catch (e) {
+    document.getElementById('fileList').innerHTML = '<div class="file-empty">Could not load files.</div>';
+  }
+}
+
+function renderFileList(files) {
+  const list = document.getElementById('fileList');
+  if (!files.length) {
+    list.innerHTML = '<div class="file-empty">No .mp4 files found.</div>';
+    return;
+  }
+  list.innerHTML = files.map(f => {
+    const parts = f.split('/');
+    const fname = parts.pop();
+    const dir = parts.join('/') || '/';
+    return `<div class="file-item" onclick="selectFile('${f.replace(/'/g, "\\'")}')">
+      <span class="file-icon">🎬</span>
+      <div style="overflow:hidden"><div class="file-name">${fname}</div><div class="file-path">${dir}</div></div>
+    </div>`;
+  }).join('');
+}
+
+function filterFiles() {
+  const q = document.getElementById('modalSearch').value.toLowerCase();
+  renderFileList(q ? allFiles.filter(f => f.toLowerCase().includes(q)) : allFiles);
+}
+
+function selectFile(path) {
+  chState[pickerCh].video = path;
+  document.getElementById(`ch${pickerCh}`).value = path;
+  onVideoChange(pickerCh);
+  buildChannelList();
+  closePicker();
+  selectChannel(pickerCh);
+}
+
+function applyManual() {
+  const p = document.getElementById('manualPath').value.trim();
+  if (p) selectFile(p);
+}
+
+function closePicker() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function isWebcam(p) {
+  return typeof p === 'string' && p.startsWith('/dev/video');
+}
+
+function pickWebcamMode(camPath, mode) {
+  const uri = `${camPath}?w=${mode.width}&h=${mode.height}&fps=${mode.fps}`;
+  chState[pickerCh].video = uri;
+  document.getElementById(`ch${pickerCh}`).value = uri;
+  positionWin(pickerCh);
+  buildChannelList();
+  closePicker();
+}
+
+async function openWebcamPicker(ch) {
+  pickerCh = ch;
+  document.getElementById('modalTitle').textContent = `Select Webcam — CH ${ch}`;
+  document.getElementById('modalSearch').value = '';
+  document.getElementById('manualPath').value = isWebcam(chState[ch].video) ? chState[ch].video : '/dev/video0';
+  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('fileList').innerHTML = '<div class="file-empty">Scanning for webcams...</div>';
+  try {
+    const res = await fetch('/api/webcams');
+    const data = await res.json();
+    const cams = data.webcams || [];
+    if (!cams.length) {
+      document.getElementById('fileList').innerHTML = '<div class="file-empty">No webcams detected.</div>';
+      return;
+    }
+    const list = document.getElementById('fileList');
+    list.innerHTML = '';
+    cams.forEach(cam => {
+      // Backwards-compat: server used to return plain strings ["/dev/video0", …].
+      // New server returns [{path, name, modes:[{width,height,fps}]}, …].
+      const info = typeof cam === 'string' ? { path: cam, name: '', modes: [] } : cam;
+      const header = document.createElement('div');
+      header.className = 'file-item';
+      header.style.cursor = 'default';
+      const name = info.name || 'USB / UVC webcam';
+      header.innerHTML = `<div class="file-icon">📷</div>
+        <div>
+          <div class="file-name">${name}</div>
+          <div class="file-path">${info.path}</div>
+        </div>`;
+      list.appendChild(header);
+      if (!info.modes || !info.modes.length) {
+        const hint = document.createElement('div');
+        hint.className = 'file-item';
+        hint.style.marginLeft = '24px';
+        hint.innerHTML = `<div class="file-icon">⚠</div>
+          <div><div class="file-name">No H.264 modes</div>
+          <div class="file-path">Click to use defaults (720p@60)</div></div>`;
+        hint.onclick = () => pickWebcamMode(info.path, { width: 1280, height: 720, fps: 60 });
+        list.appendChild(hint);
+        return;
+      }
+      info.modes.forEach(m => {
+        const mi = document.createElement('div');
+        mi.className = 'file-item';
+        mi.style.marginLeft = '24px';
+        mi.innerHTML = `<div class="file-icon">⚙</div>
+          <div><div class="file-name">${m.width}×${m.height} @ ${m.fps} fps</div>
+          <div class="file-path">H.264</div></div>`;
+        mi.onclick = () => pickWebcamMode(info.path, m);
+        list.appendChild(mi);
+      });
+    });
+  } catch (e) {
+    document.getElementById('fileList').innerHTML = '<div class="file-empty">Could not query webcams.</div>';
+  }
+}
+
+function maybeCloseModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closePicker();
+}
+
+// Toast
+let toastTimer;
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = 'toast'; }, 3200);
+}
+
+// Resize handler
+window.addEventListener('resize', () => {
+  for (let i = 0; i < numChannels; i++) positionWin(i);
+});
+
+// ---------------------------------------------------------------------------
+// Tab switching + Board Stats
+// ---------------------------------------------------------------------------
+
+let statsInterval = null;
+let currentTab = 'detection';
+let lastRpuSeq = 0;
+let fanSliderActive = false;   // suppress poll overwrite while dragging
+let fanSendTimer = null;       // debounce writes
+
+function switchTab(name) {
+  currentTab = name;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  document.getElementById('mainDetection').style.display = (name === 'detection') ? '' : 'none';
+  document.getElementById('mainStats').style.display = (name === 'stats') ? 'block' : 'none';
+  if (name === 'stats') {
+    pollStats();
+    pollFan();
+    if (!statsInterval) statsInterval = setInterval(() => { pollStats(); pollFan(); }, 1000);
+  } else {
+    if (statsInterval) { clearInterval(statsInterval); statsInterval = null; }
+  }
+}
+
+// ---- Fan control ----
+async function pollFan() {
+  if (fanSliderActive) return;
+  try {
+    const res = await fetch('/api/fan');
+    const d = await res.json();
+    if (d.ok) renderFan(d.pwm, d.pct, d.mode);
+  } catch (e) { /* ignore */ }
+}
+
+function renderFan(pwm, pct, mode) {
+  const sl = document.getElementById('fanSlider');
+  if (sl && !fanSliderActive) sl.value = Math.round(pct);
+  document.getElementById('fanPct').innerHTML = pct.toFixed(0) + '<span class="unit">%</span>';
+  document.getElementById('fanPwmRaw').textContent = `pwm: ${pwm} / 255`;
+  const rpm = Math.round(pct * 50);
+  document.getElementById('fanRpmEst').textContent = `spin: ${rpm ? rpm + ' rpm' : 'stopped'}`;
+  if (mode) renderFanMode(mode);
+}
+
+function renderFanMode(mode) {
+  const auto = mode === 'auto';
+  document.getElementById('fanModeAuto').classList.toggle('active', auto);
+  document.getElementById('fanModeManual').classList.toggle('active', !auto);
+  document.getElementById('fanModeNote').textContent = auto
+    ? 'Auto: fancontrol (lm_sensors) rewrites pwm every 5 s based on LPD temp (35–45 °C → 6–100 %).'
+    : 'Manual: fancontrol stopped. Slider setting persists until you switch back to Auto.';
+}
+
+async function setFanMode(mode) {
+  try {
+    const res = await fetch('/api/fan/mode', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({mode}),
+    });
+    const d = await res.json();
+    if (d.ok) renderFanMode(d.mode);
+  } catch (e) { /* ignore */ }
+}
+
+async function setFan(pct) {
+  pct = Math.max(0, Math.min(100, Math.round(pct)));
+  document.getElementById('fanSlider').value = pct;
+  try {
+    const res = await fetch('/api/fan', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({pct}),
+    });
+    const d = await res.json();
+    if (d.ok) renderFan(d.pwm, d.pct, d.mode);
+  } catch (e) { /* ignore */ }
+}
+
+function wireFanSlider() {
+  const sl = document.getElementById('fanSlider');
+  if (!sl || sl.dataset.wired) return;
+  sl.dataset.wired = '1';
+  sl.addEventListener('input', () => {
+    fanSliderActive = true;
+    const pct = parseInt(sl.value, 10);
+    // Immediate visual feedback, debounce the actual write.
+    document.getElementById('fanPct').innerHTML = pct + '<span class="unit">%</span>';
+    if (fanSendTimer) clearTimeout(fanSendTimer);
+    fanSendTimer = setTimeout(() => { setFan(pct); fanSliderActive = false; }, 120);
+  });
+  sl.addEventListener('change', () => {
+    fanSliderActive = true;
+    if (fanSendTimer) clearTimeout(fanSendTimer);
+    setFan(parseInt(sl.value, 10));
+    fanSliderActive = false;
+  });
+}
+
+function fmtUptime(s) {
+  s = Math.floor(s);
+  const d = Math.floor(s / 86400); s %= 86400;
+  const h = Math.floor(s / 3600); s %= 3600;
+  const m = Math.floor(s / 60); s %= 60;
+  if (d > 0) return `${d}d ${h}h ${m}m`;
+  if (h > 0) return `${h}h ${m}m ${s}s`;
+  return `${m}m ${s}s`;
+}
+
+function tempColor(c) {
+  // green < 50, yellow 50-70, red >= 70
+  if (c >= 70) return 'linear-gradient(90deg, #f59e0b, #dc2626)';
+  if (c >= 50) return 'linear-gradient(90deg, #16a34a, #f59e0b)';
+  return 'linear-gradient(90deg, #0891b2, #16a34a)';
+}
+
+async function pollStats() {
+  let d;
+  try {
+    const res = await fetch('/api/stats?since=' + lastRpuSeq);
+    d = await res.json();
+  } catch (e) { return; }
+
+  // Top tiles
+  document.getElementById('sPower').innerHTML =
+    (d.power_w != null ? d.power_w.toFixed(2) : '—') + '<span class="tile-unit">W</span>';
+  document.getElementById('sCurrent').textContent =
+    (d.current_ma != null ? d.current_ma + ' mA' : '—');
+
+  const cpus = d.cpu_utilization || [];
+  const avg = cpus.length ? (cpus.reduce((a,b)=>a+b,0) / cpus.length) : 0;
+  document.getElementById('sCpuAvg').innerHTML = avg.toFixed(1) + '<span class="tile-unit">%</span>';
+  const la = d.load_avg || [];
+  document.getElementById('sLoadAvg').textContent =
+    la.length ? `load: ${la[0].toFixed(2)} ${la[1].toFixed(2)} ${la[2].toFixed(2)}` : '—';
+
+  const dpu = d.dpu || {};
+  const dpuCUs = dpu.cu || {};
+  const dpuEntry = Object.entries(dpuCUs).find(([k]) => k.startsWith('DPUCZDX8G'));
+  const dpuStatus = dpuEntry ? dpuEntry[1].status : '—';
+  document.getElementById('sDpu').innerHTML =
+    `<span style="color:${dpuStatus === 'BUSY' ? 'var(--green)' : 'var(--muted)'}">${dpuStatus}</span>`;
+  document.getElementById('sDpuRate').textContent =
+    (dpu.usage_per_s != null ? dpu.usage_per_s.toFixed(1) + ' calls/s' : '—');
+
+  document.getElementById('sUptime').textContent = fmtUptime(d.uptime_s || 0);
+
+  // CPU grid
+  const grid = document.getElementById('cpuGrid');
+  const freqs = d.cpu_frequency_mhz || [];
+  grid.innerHTML = '';
+  cpus.forEach((pct, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'cpu-cell';
+    cell.innerHTML = `
+      <div class="cpu-top"><span>CPU ${i}</span><span class="cpu-pct">${pct.toFixed(1)}%</span></div>
+      <div class="cpu-bar"><div class="cpu-fill" style="width:${Math.min(100, pct)}%"></div></div>
+      <div class="cpu-freq">${freqs[i] != null ? freqs[i] + ' MHz' : ''}</div>`;
+    grid.appendChild(cell);
+  });
+
+  // Temperatures
+  const tempList = document.getElementById('tempList');
+  tempList.innerHTML = '';
+  const temps = d.temperatures_c || {};
+  Object.entries(temps).forEach(([name, val]) => {
+    const row = document.createElement('div');
+    row.className = 'temp-row';
+    const pct = Math.min(100, (val / 100) * 100);
+    row.innerHTML = `
+      <div class="temp-name">${name}</div>
+      <div class="temp-bar"><div class="temp-fill" style="width:${pct}%;background:${tempColor(val)}"></div></div>
+      <div class="temp-val">${val.toFixed(1)} °C</div>`;
+    tempList.appendChild(row);
+  });
+
+  // Memory
+  const mem = d.memory || {};
+  if (mem.total_mb) {
+    document.getElementById('memBar').style.width = mem.used_pct + '%';
+    document.getElementById('memKV').textContent =
+      `${mem.used_mb.toFixed(0)} / ${mem.total_mb.toFixed(0)} MB used (${mem.used_pct}%)`;
+  }
+  const cma = d.cma || {};
+  if (cma.total_mb) {
+    document.getElementById('cmaBar').style.width = cma.used_pct + '%';
+    document.getElementById('cmaKV').textContent =
+      `${cma.used_mb.toFixed(0)} / ${cma.total_mb.toFixed(0)} MB used (${cma.used_pct}%)`;
+  } else {
+    document.getElementById('cmaKV').textContent = '—';
+  }
+
+  // Compute units
+  const cuList = document.getElementById('cuList');
+  cuList.innerHTML = '';
+  Object.entries(dpuCUs).forEach(([name, info]) => {
+    const row = document.createElement('div');
+    row.className = 'cu-row';
+    const statusClass = info.status === 'BUSY' ? 'busy' : 'idle';
+    row.innerHTML = `
+      <div class="cu-name">${name}</div>
+      <div class="cu-status ${statusClass}">${info.status}</div>
+      <div class="cu-usage">${info.usage.toLocaleString()}</div>`;
+    cuList.appendChild(row);
+  });
+  if (!Object.keys(dpuCUs).length) {
+    cuList.innerHTML = '<div class="file-empty">No compute units reported.</div>';
+  }
+
+  // Voltages
+  const voltGrid = document.getElementById('voltGrid');
+  voltGrid.innerHTML = '';
+  const volts = d.voltages_mv || {};
+  Object.entries(volts).forEach(([name, val]) => {
+    const cell = document.createElement('div');
+    cell.className = 'volt-cell';
+    cell.innerHTML = `<div class="volt-name">${name}</div><div class="volt-val">${val} <span style="font-size:10px;color:var(--muted)">mV</span></div>`;
+    voltGrid.appendChild(cell);
+  });
+
+  // RPU link — tile + visualization
+  renderRpu(d.rpu || {});
+}
+
+function renderRpu(r) {
+  /* The rpmsg RTT / tx-rx / pending counters are no longer meaningful
+   * in the shm-primary firmware (rpmsg echoes don't return because the
+   * R5 main loop skips platform_poll in favour of the shm tight loop).
+   * Replace that panel with two deterministic health signals:
+   *   1. R5 remoteproc state from /sys/class/remoteproc/remoteproc0/state
+   *      (exposed by r.cores[0].state — already populated by server.py).
+   *   2. shm.magic from /api/shm/stats — whether the R5 has stamped the
+   *      ZLED sentinel. Poll is separate because /api/stats doesn't
+   *      carry shm data (kept light-weight). */
+  const sRpu    = document.getElementById('sRpu');
+  const sRpuSub = document.getElementById('sRpuSub');
+  const r5state = (r.cores && r.cores[0] && r.cores[0].state) || 'unknown';
+  if (r5state === 'running') {
+    sRpu.innerHTML   = `<span style="color:var(--green);font-size:18px">RUNNING</span>`;
+    sRpuSub.textContent = 'remoteproc0: running';
+  } else {
+    sRpu.innerHTML   = `<span style="color:var(--red);font-size:18px">${r5state.toUpperCase()}</span>`;
+    sRpuSub.textContent = `remoteproc0: ${r5state}`;
+  }
+  /* Fire-and-forget shm health check. Paints a second sub-line below
+   * the "RUNNING" tile indicating whether the shm fast path is
+   * operational (magic == 0x5A4C4544 = "ZLED"). */
+  fetch('/api/shm/stats').then(r => r.json()).then(s => {
+    const magicOk = s.ok && (s.magic === 0x5A4C4544);
+    const el = document.getElementById('sRpuShm');
+    if (!el) return;
+    if (magicOk) {
+      el.innerHTML = `<span style="color:var(--green)">shm ✓</span> `
+                   + `<span style="color:var(--muted);font-size:11px">seq=${s.seq}</span>`;
+    } else {
+      el.innerHTML = `<span style="color:var(--muted)">shm: no magic (R5 not yet observed)</span>`;
+    }
+  }).catch(() => {});
+
+  // RPU core grid (mirrors APU cpu-grid styling).
+  const grid = document.getElementById('rpuGrid');
+  if (grid) {
+    const cores = r.cores || [];
+    grid.innerHTML = '';
+    cores.forEach(c => {
+      const pct = c.util_pct != null ? c.util_pct : 0;
+      const offline = c.state !== 'running';
+      const cell = document.createElement('div');
+      cell.className = 'cpu-cell';
+      const pctTxt = offline ? '<span style="color:var(--muted)">offline</span>'
+                             : `${pct.toFixed(1)}%`;
+      const fillW = offline ? 0 : Math.min(100, pct);
+      const freq = c.freq_mhz != null ? c.freq_mhz + ' MHz' : '';
+      cell.innerHTML = `
+        <div class="cpu-top"><span>${c.name}</span><span class="cpu-pct">${pctTxt}</span></div>
+        <div class="cpu-bar"><div class="cpu-fill" style="width:${fillW}%"></div></div>
+        <div class="cpu-freq">${freq}</div>`;
+      grid.appendChild(cell);
+    });
+  }
+
+  // Advance the seq cursor so future polls only fetch truly-new events.
+  if (r.last_seq) lastRpuSeq = Math.max(lastRpuSeq, r.last_seq);
+}
+
+// Init
+window.onload = () => {
+  buildCanvas();
+  setNumChannels(4);
+  selectChannel(0);
+  pollStatus();
+  setInterval(pollStatus, 2000);
+  setInterval(pollLogs, 500);
+  setInterval(pollEvents, 750);
+  pollEvents();
+  wireFanSlider();
+  pollLedMode();
+  setInterval(pollLedMode, 1000);
+};
+
+// LED-source selector (APU sysfs vs RPU over rpmsg)
+async function pollLedMode() {
+  try {
+    const res = await fetch('/api/led/mode');
+    const d = await res.json();
+    window._ledMode = d.mode;   /* cached so alert-card badge renders without a re-fetch */
+    renderLedMode(d.mode, d.pin, d.rpu_link);
+  } catch (e) { /* ignore */ }
+}
+
+function renderLedMode(mode, pin, rpuLink) {
+  const apuBtn = document.getElementById('ledModeApu');
+  const rpuBtn = document.getElementById('ledModeRpu');
+  if (!apuBtn || !rpuBtn) return;
+  apuBtn.classList.toggle('active', mode === 'apu');
+  rpuBtn.classList.toggle('active', mode === 'rpu');
+  const dot = document.getElementById('ledPinDot');
+  const lbl = document.getElementById('ledPinLabel');
+  if (dot) dot.classList.toggle('on', pin === 1);
+  if (lbl) lbl.textContent = pin === null ? 'pin: n/a' : `pin: ${pin}`;
+  const note = document.getElementById('ledModeNote');
+  if (note) {
+    if (mode === 'apu') {
+      note.textContent = 'APU mode: server writes /sys/class/gpio/gpio504 directly on CH 0 alert. R5 is not involved.';
+    } else {
+      note.textContent = rpuLink
+        ? 'RPU mode: server sends ALERT over rpmsg; R5 firmware drives the pin via axi_gpio_0 MMIO. APU does not touch the pin.'
+        : 'RPU mode: /dev/rpmsg0 is absent — R5 not running or rpmsg_chrdev not bound. LED will stay off until the R5 firmware is loaded and the bridge comes up.';
+    }
+  }
+}
+
+async function setLedMode(mode) {
+  try {
+    const res = await fetch('/api/led/mode', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({mode}),
+    });
+    const d = await res.json();
+    if (d.ok) pollLedMode();
+  } catch (e) { /* ignore */ }
+}
+
+// ---------------------------------------------------------------------------
+// Alert polling + per-channel action buttons
+// ---------------------------------------------------------------------------
+
+async function pollEvents() {
+  try {
+    const res = await fetch('/api/events');
+    const data = await res.json();
+    const alerts = data.alerts || {};
+    for (let i = 0; i < 4; i++) {
+      const card = document.getElementById(`alert${i}`);
+      if (!card) continue;
+      card.classList.toggle('inactive', i >= numChannels);
+      const a = alerts[String(i)] || { active: false };
+      const statusEl = card.querySelector('.alert-status');
+      const reasonEl = card.querySelector('.alert-reason');
+      const rpuEl    = card.querySelector('.rpu-badge');
+      if (a.active) {
+        card.classList.remove('clear');
+        card.classList.add('active');
+        statusEl.textContent = 'ALERT';
+        reasonEl.textContent = a.reason || 'zone breach';
+        /* Badge now shows which path is actually driving the LED for
+         * this alert — either APU (server.py sysfs write) or RPU
+         * (shm → R5 poll → GPIO). Reads the current led_mode. */
+        rpuEl.classList.remove('idle', 'pending');
+        rpuEl.classList.add('ack');
+        rpuEl.textContent = (window._ledMode === 'rpu') ? 'RPU' : 'APU';
+      } else {
+        card.classList.remove('active');
+        card.classList.add('clear');
+        statusEl.textContent = 'CLEAR';
+        const nZones = chState[i]?.zones?.length || 0;
+        reasonEl.textContent = nZones ? `${nZones} zone${nZones>1?'s':''} armed` : 'no zones';
+        rpuEl.classList.remove('pending','ack');
+        rpuEl.classList.add('idle');
+        rpuEl.textContent = 'RPU';
+      }
+    }
+  } catch (e) { /* transient */ }
+}
+
+async function simulateAlert(ch) {
+  try {
+    await fetch('/api/events/trigger', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ch, reason: 'manual test' })
+    });
+    pollEvents();
+  } catch (e) {}
+}
+
+async function clearChAlert(ch) {
+  try {
+    await fetch('/api/events/clear', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ch })
+    });
+    pollEvents();
+  } catch (e) {}
+}
+</script>
+</body>
+</html>
