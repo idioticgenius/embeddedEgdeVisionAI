@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Master Draft — Diagrams</title>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<header>
+  <h1>Master Draft — System Diagrams</h1>
+  <nav>
+    <a href="#system">System</a>
+    <a href="#hardware">Hardware</a>
+    <a href="#usecase">Use Case</a>
+    <a href="#dfd">DFDs</a>
+    <a href="#pm">PM</a>
+  </nav>
+</header>
+<main>
+
+<p>This folder holds the web-viewable diagrams for the Master Draft. Each tile opens
+a self-contained page that renders the diagram inline as SVG. The diagrams cover:
+the system architecture, the hardware architecture, the software stack, the use-case
+diagram, and Data Flow Diagrams at Levels 0, 1, and 2 for every principal process.</p>
+
+<h2 id="system">System and Architecture</h2>
+<div class="tile-grid">
+  <a class="tile" href="01_system_architecture.html">
+    <h4>System Architecture</h4>
+    <p>End-to-end view: cameras → pipeline → DPU → zoneguard → R5 → LED + dashboard.</p>
+  </a>
+  <a class="tile" href="02_hardware_architecture.html">
+    <h4>Hardware Architecture</h4>
+    <p>Kria K26 SoM, MPSoC, FPGA fabric IP cores, AXI interconnect, peripherals.</p>
+  </a>
+  <a class="tile" href="03_software_stack.html">
+    <h4>Software Architecture Stack</h4>
+    <p>PetaLinux → XRT → VART → VVAS → GStreamer → zoneguard → Flask + R5 firmware.</p>
+  </a>
+</div>
+
+<h2 id="usecase">Use Case</h2>
+<div class="tile-grid">
+  <a class="tile" href="04_use_case.html">
+    <h4>Use Case Diagram</h4>
+    <p>Operator and monitored subject as actors, with the externally visible use cases.</p>
+  </a>
+</div>
+
+<h2 id="dfd">Data Flow Diagrams</h2>
+<div class="tile-grid">
+  <a class="tile" href="05_dfd_l0_context.html">
+    <h4>DFD Level 0 — Context</h4>
+    <p>System boundary, three external entities (cameras, monitor + LEDs, browser).</p>
+  </a>
+  <a class="tile" href="06_dfd_l1.html">
+    <h4>DFD Level 1 — Sub-Process Decomposition</h4>
+    <p>Eight processes: P1 capture, P2 decode, P3 preprocess, P4 inference, P5 zone-eval, P6 IPC dispatch, P7 actuation, P8 web.</p>
+  </a>
+</div>
+
+<h3>DFD Level 2 — Per-process refinement</h3>
+<div class="tile-grid">
+  <a class="tile" href="07_dfd_l2_p1_capture.html"><h4>P1 — Camera capture</h4><p>V4L2 buffer pools, four /dev/video* nodes.</p></a>
+  <a class="tile" href="08_dfd_l2_p2_decode.html"><h4>P2 — H.264 decode</h4><p>VCU through omxh264dec, NV12 output buffers.</p></a>
+  <a class="tile" href="09_dfd_l2_p3_preprocess.html"><h4>P3 — Image preprocessing</h4><p>image-processing kernel: NV12→BGR, resize, mean-subtract.</p></a>
+  <a class="tile" href="10_dfd_l2_p4_inference.html"><h4>P4 — Inference cascade</h4><p>RefineDet → ROI crop → DenseBox.</p></a>
+  <a class="tile" href="11_dfd_l2_p5_zone.html"><h4>P5 — Zone-crossing eval</h4><p>cross-product hit-test, hysteresis, dual-path emit.</p></a>
+  <a class="tile" href="12_dfd_l2_p6_ipc.html"><h4>P6 — APU↔RPU dispatch</h4><p>fast path TCM mailbox, slow path UDS, control plane rpmsg.</p></a>
+  <a class="tile" href="13_dfd_l2_p7_actuation.html"><h4>P7 — LED actuation</h4><p>R5 polling loop, AXI GPIO write, PMOD pin flip.</p></a>
+  <a class="tile" href="14_dfd_l2_p8_web.html"><h4>P8 — Web GUI service</h4><p>Flask routes, SSE, polygon editor, Board Stats.</p></a>
+</div>
+
+<h2 id="pm">Project Management</h2>
+<div class="tile-grid">
+  <a class="tile" href="15_gantt_chart.html">
+    <h4>Project Gantt Chart</h4>
+    <p>Four iteration cycles, planned vs actual, milestones M1–M5, cumulative slip 10 d.</p>
+  </a>
+  <a class="tile" href="16_risk_register.html">
+    <h4>Risk Heatmap</h4>
+    <p>Five-by-five likelihood × impact heatmap. R-02, R-04, R-09 materialised; R-07 avoided.</p>
+  </a>
+</div>
+
+</main>
+<footer>Master Draft — Embedded Edge Vision AI on AMD Kria SoM · Abhidan Jung Thapa · 77466916</footer>
+</body>
+</html>
