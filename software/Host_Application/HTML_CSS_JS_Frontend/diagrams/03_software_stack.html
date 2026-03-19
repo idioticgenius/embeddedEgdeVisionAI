@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>Software Architecture Stack</title>
+<link rel="stylesheet" href="styles.css"/>
+</head><body>
+<header>
+  <h1>Software Architecture Stack</h1>
+  <nav><a href="index.html">← back to index</a></nav>
+</header>
+<main>
+<div class="diagram-card">
+  <div id="diagram"></div>
+  <p class="caption">Layered stack from MPSoC silicon up through PetaLinux, XRT, VART, VVAS, GStreamer, Flask, and the operator browser. R5 firmware is on a separate path.</p>
+  
+  
+</div>
+</main>
+<footer>Master Draft — Embedded Edge Vision AI on AMD Kria SoM</footer>
+<script src="diagrams.js"></script>
+<script>
+document.getElementById('diagram').innerHTML = D.svg(1000, 600, `<rect x="50" y="50" width="720" height="55" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" stroke-width="1.5" rx="4"/>
+<text x="410" y="72" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">Browser (Chrome / Firefox)</text>
+<text x="410" y="92" text-anchor="middle" font-size="11" fill="#555">Operator dashboard — SSE + MJPEG</text>
+<rect x="50" y="115" width="720" height="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5" rx="4"/>
+<text x="410" y="137" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">Flask 2.2 + Flask-Login</text>
+<text x="410" y="157" text-anchor="middle" font-size="11" fill="#555">server.py — PipelineManager, AlertState, ApuGpioBank, RpuShmBank</text>
+<rect x="50" y="180" width="720" height="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5" rx="4"/>
+<text x="410" y="202" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">GStreamer 1.18 + zoneguard</text>
+<text x="410" y="222" text-anchor="middle" font-size="11" fill="#555">v4l2src → omxh264dec → vvas_xinfer → zoneguard → kmssink</text>
+<rect x="50" y="245" width="720" height="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5" rx="4"/>
+<text x="410" y="267" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">VVAS 3.0</text>
+<text x="410" y="287" text-anchor="middle" font-size="11" fill="#555">vvas_xinfer · vvas_xabrscaler · vvas_xmetaaffixer · vvas_xoverlay</text>
+<rect x="50" y="310" width="720" height="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5" rx="4"/>
+<text x="410" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">Vitis AI Runtime (VART)</text>
+<text x="410" y="352" text-anchor="middle" font-size="11" fill="#555">INT8 .xmodel dispatcher onto DPU</text>
+<rect x="50" y="375" width="720" height="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5" rx="4"/>
+<text x="410" y="397" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">Xilinx Runtime (XRT)</text>
+<text x="410" y="417" text-anchor="middle" font-size="11" fill="#555">loads dpu.xclbin, exposes kernels through file descriptors</text>
+<rect x="50" y="440" width="720" height="55" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.5" rx="4"/>
+<text x="410" y="462" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">PetaLinux 2022.2 kernel 5.15.36-xilinx</text>
+<text x="410" y="482" text-anchor="middle" font-size="11" fill="#555">zocl · OpenAMP/rpmsg · V4L2 · DRM/KMS · hwmon · remoteproc</text>
+<rect x="50" y="505" width="720" height="55" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5" rx="4"/>
+<text x="410" y="527" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">MPSoC silicon (APU + RPU + DPU + VCU + image_processing + v_mix)</text>
+<text x="410" y="547" text-anchor="middle" font-size="11" fill="#555">Zynq UltraScale+ on Kria K26 SoM</text>
+<rect x="800" y="230" width="180" height="160" fill="url(#storeGrad)" stroke="#a16207" stroke-width="1.5" rx="6"/>
+<text x="890" y="260" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">R5 bare-metal firmware</text>
+<text x="890" y="285" text-anchor="middle" font-size="11" fill="#555">no OS, no scheduler</text>
+<text x="890" y="305" text-anchor="middle" font-size="11" fill="#555">main() → poll TCM</text>
+<text x="890" y="325" text-anchor="middle" font-size="11" fill="#555">drives AXI GPIO</text>
+<text x="890" y="360" text-anchor="middle" font-size="10" fill="#555">loaded by remoteproc</text>
+<text x="890" y="376" text-anchor="middle" font-size="10" fill="#555">at /lib/firmware/rproc-...</text>`);
+</script>
+</body></html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>Hardware Architecture</title>
+<link rel="stylesheet" href="styles.css"/>
+</head><body>
+<header>
+  <h1>Hardware Architecture</h1>
+  <nav><a href="index.html">← back to index</a></nav>
+</header>
+<main>
+<div class="diagram-card">
+  <div id="diagram"></div>
+  <p class="caption">Kria K26 SoM containing the Zynq UltraScale+ MPSoC, with PS (APU + RPU + VCU) and PL (DPU + image_processing + v_mix + AXI GPIO).</p>
+  
+  
+</div>
+</main>
+<footer>Master Draft — Embedded Edge Vision AI on AMD Kria SoM</footer>
+<script src="diagrams.js"></script>
+<script>
+document.getElementById('diagram').innerHTML = D.svg(860, 530, `<rect x="40" y="40" width="780" height="460" fill="#f0f9ff" stroke="#0369a1" stroke-width="2" rx="8"/>
+<text x="430" y="65" text-anchor="middle" font-size="15" font-weight="600" fill="#0369a1">Kria K26 System-on-Module (Zynq UltraScale+ MPSoC)</text>
+<rect x="60" y="90" width="360" height="260" fill="#dbeafe" stroke="#1e3a8a" rx="6"/>
+<text x="240" y="110" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a8a">Processing System (PS)</text>
+<rect x="80" y="125" width="160" height="75" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="160" y="148" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">APU — Cortex-A53</text>
+<text x="160" y="166" text-anchor="middle" font-size="10" fill="#555">4 cores @ 1.33 GHz</text>
+<text x="160" y="182" text-anchor="middle" font-size="10" fill="#555">PetaLinux 2022.2</text>
+<rect x="260" y="125" width="140" height="75" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="330" y="148" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">RPU — Cortex-R5F</text>
+<text x="330" y="166" text-anchor="middle" font-size="10" fill="#555">2 cores @ 533 MHz</text>
+<text x="330" y="182" text-anchor="middle" font-size="10" fill="#555">bare-metal</text>
+<rect x="80" y="220" width="160" height="50" fill="url(#storeGrad)" stroke="#a16207" rx="4"/>
+<text x="160" y="242" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">TCM_0A / TCM_0B</text>
+<text x="160" y="258" text-anchor="middle" font-size="10" fill="#555">0xFFE00000 / 0xFFE20000</text>
+<rect x="260" y="220" width="140" height="50" fill="url(#storeGrad)" stroke="#a16207" rx="4"/>
+<text x="330" y="242" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">IPI mailbox</text>
+<text x="330" y="258" text-anchor="middle" font-size="10" fill="#555">APU↔RPU0</text>
+<rect x="80" y="285" width="320" height="50" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="240" y="305" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">VCU (H.264/H.265 decode)</text>
+<text x="240" y="323" text-anchor="middle" font-size="10" fill="#555">hardened block</text>
+<rect x="440" y="90" width="360" height="260" fill="#dcfce7" stroke="#15803d" rx="6"/>
+<text x="620" y="110" text-anchor="middle" font-size="13" font-weight="600" fill="#15803d">Programmable Logic (PL) — UltraScale+ FPGA</text>
+<rect x="460" y="125" width="160" height="75" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="540" y="148" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">DPUCZDX8G B3136</text>
+<text x="540" y="166" text-anchor="middle" font-size="10" fill="#555">aclk 275 / ap_clk_2 550 MHz</text>
+<text x="540" y="182" text-anchor="middle" font-size="10" fill="#555">URAM accel enabled</text>
+<rect x="640" y="125" width="140" height="75" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="710" y="148" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">image_processing</text>
+<text x="710" y="166" text-anchor="middle" font-size="10" fill="#555">NV12→BGR resize</text>
+<text x="710" y="182" text-anchor="middle" font-size="10" fill="#555">1 CU @ 275 MHz</text>
+<rect x="460" y="220" width="160" height="50" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="540" y="240" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">v_mix (Video Mixer)</text>
+<text x="540" y="258" text-anchor="middle" font-size="10" fill="#555">@0xB0000000  6 layers</text>
+<rect x="640" y="220" width="140" height="50" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="710" y="240" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">AXI GPIO</text>
+<text x="710" y="258" text-anchor="middle" font-size="10" fill="#555">@0xA0010000  4 outputs</text>
+<rect x="460" y="285" width="320" height="50" fill="url(#storeGrad)" stroke="#a16207" rx="4"/>
+<text x="620" y="305" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">AXI Interconnect</text>
+<text x="620" y="323" text-anchor="middle" font-size="10" fill="#555">HP1, HP2, HPC0, LPD ports</text>
+<rect x="60" y="370" width="360" height="45" fill="#fee2e2" stroke="#b91c1c" rx="4"/>
+<text x="240" y="398" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">DDR4 SDRAM — 4 GB</text>
+<rect x="440" y="370" width="360" height="45" fill="#fee2e2" stroke="#b91c1c" rx="4"/>
+<text x="620" y="398" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">eMMC flash — 16 GB / INA260 power monitor</text>
+<rect x="40" y="430" width="780" height="50" fill="#fde68a" stroke="#a16207" rx="4"/>
+<text x="430" y="450" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">KV260 carrier card</text>
+<text x="430" y="468" text-anchor="middle" font-size="10" fill="#555">USB 3.0 ×4   ·   DisplayPort   ·   Gigabit Ethernet   ·   microSD   ·   USB-UART   ·   PMOD J2</text>`);
+</script>
+</body></html>

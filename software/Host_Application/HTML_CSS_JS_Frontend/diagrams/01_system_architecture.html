@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>System Architecture</title>
+<link rel="stylesheet" href="styles.css"/>
+</head><body>
+<header>
+  <h1>System Architecture</h1>
+  <nav><a href="index.html">← back to index</a></nav>
+</header>
+<main>
+<div class="diagram-card">
+  <div id="diagram"></div>
+  <p class="caption">End-to-end view: cameras → pipeline → DPU → zoneguard → R5 → LED + dashboard.</p>
+  
+  
+</div>
+</main>
+<footer>Master Draft — Embedded Edge Vision AI on AMD Kria SoM</footer>
+<script src="diagrams.js"></script>
+<script>
+document.getElementById('diagram').innerHTML = D.svg(870, 510, `<rect x="30" y="60" width="110" height="50" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="6"/>
+<text x="85" y="90" text-anchor="middle" font-size="12" fill="#0F2A4D">Camera ch0</text>
+<line x1="140" y1="85" x2="190" y2="180" stroke="#12366B" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="30" y="130" width="110" height="50" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="6"/>
+<text x="85" y="160" text-anchor="middle" font-size="12" fill="#0F2A4D">Camera ch1</text>
+<line x1="140" y1="155" x2="190" y2="180" stroke="#12366B" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="30" y="200" width="110" height="50" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="6"/>
+<text x="85" y="230" text-anchor="middle" font-size="12" fill="#0F2A4D">Camera ch2</text>
+<line x1="140" y1="225" x2="190" y2="180" stroke="#12366B" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="30" y="270" width="110" height="50" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="6"/>
+<text x="85" y="300" text-anchor="middle" font-size="12" fill="#0F2A4D">Camera ch3</text>
+<line x1="140" y1="295" x2="190" y2="180" stroke="#12366B" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="190" y="100" width="320" height="160" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="350" y="125" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">GStreamer Pipeline (single combined gst-launch-1.0)</text>
+<text x="350" y="145" text-anchor="middle" font-size="11" fill="#0F2A4D">v4l2src</text>
+<text x="350" y="163" text-anchor="middle" font-size="11" fill="#0F2A4D">h264parse + omxh264dec (VCU)</text>
+<text x="350" y="181" text-anchor="middle" font-size="11" fill="#0F2A4D">image_processing (FPGA)</text>
+<text x="350" y="199" text-anchor="middle" font-size="11" fill="#0F2A4D">vvas_xinfer RefineDet (DPU)</text>
+<text x="350" y="217" text-anchor="middle" font-size="11" fill="#0F2A4D">zoneguard</text>
+<text x="350" y="235" text-anchor="middle" font-size="11" fill="#0F2A4D">vvas_xoverlay → kmssink</text>
+<rect x="540" y="110" width="140" height="60" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="610" y="140" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">v_mix (4-ch HDMI)</text>
+<text x="610" y="160" text-anchor="middle" font-size="10" fill="#555">@0xB0000000</text>
+<rect x="720" y="110" width="110" height="60" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="6"/>
+<text x="775" y="140" text-anchor="middle" font-size="12" fill="#0F2A4D">HDMI Monitor</text>
+<text x="775" y="158" text-anchor="middle" font-size="10" fill="#555">2x2 grid</text>
+<line x1="510" y1="140" x2="540" y2="140" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="680" y1="140" x2="720" y2="140" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="190" y="320" width="160" height="50" fill="url(#storeGrad)" stroke="#a16207" rx="4"/>
+<text x="270" y="340" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">shm_alert (TCM_0B)</text>
+<text x="270" y="358" text-anchor="middle" font-size="10" fill="#555">0xFFE20000  magic ZLED</text>
+<line x1="270" y1="260" x2="270" y2="320" stroke="#12366B" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="345" y="295" font-size="10" fill="#0F2A4D">__atomic_fetch_or (~100ns)</text>
+<rect x="380" y="320" width="130" height="50" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="445" y="345" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">R5 mirror @ 533MHz</text>
+<text x="445" y="362" text-anchor="middle" font-size="10" fill="#555">poll @ 500kHz</text>
+<line x1="350" y1="345" x2="380" y2="345" stroke="#12366B" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="540" y="320" width="130" height="50" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="605" y="345" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">AXI GPIO core</text>
+<text x="605" y="362" text-anchor="middle" font-size="10" fill="#555">@0xA0010000</text>
+<line x1="510" y1="345" x2="540" y2="345" stroke="#12366B" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="700" y="320" width="130" height="50" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="6"/>
+<text x="765" y="345" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">PMOD J2.1 LED</text>
+<text x="765" y="362" text-anchor="middle" font-size="10" fill="#555">FPGA ball H12</text>
+<line x1="670" y1="345" x2="700" y2="345" stroke="#12366B" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="190" y="420" width="160" height="50" fill="url(#storeGrad)" stroke="#a16207" rx="4"/>
+<text x="270" y="440" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">/tmp/zoneguard.sock</text>
+<text x="270" y="458" text-anchor="middle" font-size="10" fill="#555">SOCK_DGRAM JSON</text>
+<line x1="270" y1="260" x2="270" y2="420" stroke="#12366B" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+<rect x="380" y="420" width="130" height="50" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" rx="6"/>
+<text x="445" y="445" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">Flask server</text>
+<text x="445" y="462" text-anchor="middle" font-size="10" fill="#555">port 5000</text>
+<line x1="350" y1="445" x2="380" y2="445" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="540" y="420" width="130" height="50" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="6"/>
+<text x="605" y="445" text-anchor="middle" font-size="12" font-weight="600" fill="#0F2A4D">Browser</text>
+<text x="605" y="462" text-anchor="middle" font-size="10" fill="#555">SSE + MJPEG</text>
+<line x1="510" y1="445" x2="540" y2="445" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>`);
+</script>
+</body></html>

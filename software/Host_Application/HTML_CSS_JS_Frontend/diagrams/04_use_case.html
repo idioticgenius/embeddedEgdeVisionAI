@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>Use Case Diagram</title>
+<link rel="stylesheet" href="styles.css"/>
+</head><body>
+<header>
+  <h1>Use Case Diagram</h1>
+  <nav><a href="index.html">← back to index</a></nav>
+</header>
+<main>
+<div class="diagram-card">
+  <div id="diagram"></div>
+  <p class="caption">Operator and the monitored subject, with the externally visible use cases of the system.</p>
+  
+  
+</div>
+</main>
+<footer>Master Draft — Embedded Edge Vision AI on AMD Kria SoM</footer>
+<script src="diagrams.js"></script>
+<script>
+document.getElementById('diagram').innerHTML = D.svg(920, 470, `<g transform="translate(80,180)"><circle cx="0" cy="0" r="12" fill="none" stroke="#12366B" stroke-width="1.6"/><line x1="0" y1="12" x2="0" y2="36" stroke="#12366B" stroke-width="1.6"/><line x1="-15" y1="22" x2="15" y2="22" stroke="#12366B" stroke-width="1.6"/><line x1="0" y1="36" x2="-12" y2="54" stroke="#12366B" stroke-width="1.6"/><line x1="0" y1="36" x2="12" y2="54" stroke="#12366B" stroke-width="1.6"/><text x="0" y="75" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">Operator</text></g>
+<g transform="translate(800,180)"><circle cx="0" cy="0" r="12" fill="none" stroke="#12366B" stroke-width="1.6"/><line x1="0" y1="12" x2="0" y2="36" stroke="#12366B" stroke-width="1.6"/><line x1="-15" y1="22" x2="15" y2="22" stroke="#12366B" stroke-width="1.6"/><line x1="0" y1="36" x2="-12" y2="54" stroke="#12366B" stroke-width="1.6"/><line x1="0" y1="36" x2="12" y2="54" stroke="#12366B" stroke-width="1.6"/><text x="0" y="75" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">Monitored subject</text></g>
+<rect x="180" y="40" width="560" height="380" fill="none" stroke="#12366B" stroke-dasharray="6 4" stroke-width="1.5" rx="10"/>
+<text x="460" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="#12366B">KV260 Multichannel + RPU System</text>
+<ellipse cx="300" cy="80" rx="105" ry="22" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.4"/>
+<text x="300" y="85" text-anchor="middle" font-size="12" fill="#0F2A4D">Log in</text>
+<ellipse cx="560" cy="80" rx="105" ry="22" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.4"/>
+<text x="560" y="85" text-anchor="middle" font-size="12" fill="#0F2A4D">Configure threshold zones</text>
+<ellipse cx="300" cy="140" rx="105" ry="22" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.4"/>
+<text x="300" y="145" text-anchor="middle" font-size="12" fill="#0F2A4D">Start pipeline</text>
+<ellipse cx="560" cy="140" rx="105" ry="22" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.4"/>
+<text x="560" y="145" text-anchor="middle" font-size="12" fill="#0F2A4D">Stop pipeline</text>
+<ellipse cx="300" cy="200" rx="105" ry="22" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.4"/>
+<text x="300" y="205" text-anchor="middle" font-size="12" fill="#0F2A4D">View live video</text>
+<ellipse cx="560" cy="200" rx="105" ry="22" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.4"/>
+<text x="560" y="205" text-anchor="middle" font-size="12" fill="#0F2A4D">View alert events</text>
+<ellipse cx="300" cy="260" rx="105" ry="22" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.4"/>
+<text x="300" y="265" text-anchor="middle" font-size="12" fill="#0F2A4D">View system telemetry</text>
+<ellipse cx="560" cy="260" rx="105" ry="22" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.4"/>
+<text x="560" y="265" text-anchor="middle" font-size="12" fill="#0F2A4D">Log out</text>
+<ellipse cx="430" cy="340" rx="105" ry="22" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.4"/>
+<text x="430" y="345" text-anchor="middle" font-size="12" fill="#0F2A4D">Cross threshold zone (event-triggered)</text>
+<line x1="108" y1="180" x2="195" y2="80" stroke="#12366B" stroke-width="1"/>
+<line x1="108" y1="180" x2="455" y2="80" stroke="#12366B" stroke-width="1"/>
+<line x1="108" y1="180" x2="195" y2="140" stroke="#12366B" stroke-width="1"/>
+<line x1="108" y1="180" x2="455" y2="140" stroke="#12366B" stroke-width="1"/>
+<line x1="108" y1="180" x2="195" y2="200" stroke="#12366B" stroke-width="1"/>
+<line x1="108" y1="180" x2="455" y2="200" stroke="#12366B" stroke-width="1"/>
+<line x1="108" y1="180" x2="195" y2="260" stroke="#12366B" stroke-width="1"/>
+<line x1="108" y1="180" x2="455" y2="260" stroke="#12366B" stroke-width="1"/>
+<line x1="775" y1="180" x2="535" y2="340" stroke="#12366B" stroke-width="1"/>`);
+</script>
+</body></html>
