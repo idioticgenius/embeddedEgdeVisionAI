@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>DFD Level 1 — Sub-Process Decomposition</title>
+<link rel="stylesheet" href="styles.css"/>
+</head><body>
+<header>
+  <h1>DFD Level 1 — Sub-Process Decomposition</h1>
+  <nav><a href="index.html">← back to index</a></nav>
+</header>
+<main>
+<div class="diagram-card">
+  <div id="diagram"></div>
+  <p class="caption">Eight principal processes inside the system, with the dataflow edges between them.</p>
+  
+<div class="legend">
+  <span><i class="process"></i> Process</span>
+  <span><i class="store"></i> Data store</span>
+  <span><i class="entity"></i> External entity</span>
+</div>
+
+  
+</div>
+</main>
+<footer>Master Draft — Embedded Edge Vision AI on AMD Kria SoM</footer>
+<script src="diagrams.js"></script>
+<script>
+document.getElementById('diagram').innerHTML = D.svg(750, 450, `<circle cx="140" cy="80" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="140" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P1</text>
+<text x="140" y="76" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">Camera</text>
+<text x="140" y="90" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">capture</text>
+<circle cx="140" cy="200" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="140" y="182" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P2</text>
+<text x="140" y="196" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">VCU</text>
+<text x="140" y="210" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">decode</text>
+<circle cx="140" cy="320" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="140" y="302" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P3</text>
+<text x="140" y="316" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">Image</text>
+<text x="140" y="330" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">preprocess</text>
+<circle cx="340" cy="320" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="340" y="302" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P4</text>
+<text x="340" y="316" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">Inference</text>
+<text x="340" y="330" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">cascade</text>
+<circle cx="540" cy="320" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="540" y="302" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P5</text>
+<text x="540" y="316" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">Zone-cross</text>
+<text x="540" y="330" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">evaluation</text>
+<circle cx="540" cy="200" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="540" y="182" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P6</text>
+<text x="540" y="196" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">APU↔RPU</text>
+<text x="540" y="210" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">dispatch</text>
+<circle cx="540" cy="80" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="540" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P7</text>
+<text x="540" y="76" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">LED</text>
+<text x="540" y="90" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">actuation</text>
+<circle cx="340" cy="80" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="340" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P8</text>
+<text x="340" y="76" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">Web GUI</text>
+<text x="340" y="90" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">service</text>
+<line x1="140" y1="135" x2="140" y2="145" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="140" y="136" text-anchor="middle" font-size="10" fill="#0F2A4D" style="paint-order:stroke; stroke:white; stroke-width:3px;">frames</text>
+<line x1="140" y1="255" x2="140" y2="265" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="140" y="256" text-anchor="middle" font-size="10" fill="#0F2A4D" style="paint-order:stroke; stroke:white; stroke-width:3px;">NV12 buffers</text>
+<line x1="195" y1="320" x2="285" y2="320" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="240" y="316" text-anchor="middle" font-size="10" fill="#0F2A4D" style="paint-order:stroke; stroke:white; stroke-width:3px;">BGR @480x360</text>
+<line x1="395" y1="320" x2="485" y2="320" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="440" y="316" text-anchor="middle" font-size="10" fill="#0F2A4D" style="paint-order:stroke; stroke:white; stroke-width:3px;">detections</text>
+<line x1="540" y1="265" x2="540" y2="255" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="540" y="256" text-anchor="middle" font-size="10" fill="#0F2A4D" style="paint-order:stroke; stroke:white; stroke-width:3px;">alert events</text>
+<line x1="540" y1="145" x2="540" y2="135" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="540" y="136" text-anchor="middle" font-size="10" fill="#0F2A4D" style="paint-order:stroke; stroke:white; stroke-width:3px;">GPIO writes</text>
+<line x1="485" y1="200" x2="395" y2="105" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="440" y="148" text-anchor="middle" font-size="10" fill="#0F2A4D" style="paint-order:stroke; stroke:white; stroke-width:3px;">rpmsg ack</text>
+<line x1="285" y1="95" x2="485" y2="95" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="385" y="91" text-anchor="middle" font-size="10" fill="#0F2A4D" style="paint-order:stroke; stroke:white; stroke-width:3px;">alert state</text>
+<rect x="30" y="30" width="100" height="40" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="4"/>
+<text x="80" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">Cameras</text>
+<line x1="80" y1="70" x2="100" y2="80" stroke="#12366B" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="600" y="30" width="100" height="40" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="4"/>
+<text x="650" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">PMOD LEDs</text>
+<line x1="600" y1="70" x2="580" y2="80" stroke="#12366B" stroke-width="1.4" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<rect x="360" y="380" width="100" height="40" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="4"/>
+<text x="410" y="405" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">Operator browser</text>
+<line x1="380" y1="380" x2="360" y2="110" stroke="#12366B" stroke-width="1.4" stroke-dasharray="4 3"/>
+<rect x="230" y="380" width="100" height="30" fill="url(#storeGrad)" stroke="#a16207"/>
+<line x1="230" y1="380" x2="230" y2="410" stroke="#a16207" stroke-width="3"/>
+<text x="285" y="399" text-anchor="middle" font-size="10" fill="#0F2A4D">D1 zones JSON</text>`);
+</script>
+</body></html>
