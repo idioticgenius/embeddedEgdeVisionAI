@@ -1,0 +1,18 @@
+{
+  "inference-level": 1,
+  "inference-max-queue": 30,
+  "low-latency": false,
+  "kernel": {
+    "config": {
+      "batch-size": 1,
+      "model-name": "ssd_mobilenet_v2_coco_tf",
+      "model-class": "TFSSD",
+      "model-format": "RGB",
+      "model-path": "/usr/share/vitis_ai_library/models/",
+      "vitis-ai-preprocess": false,
+      "max-objects": 10,
+      "performance-test": false,
+      "debug-level": 0
+    }
+  }
+}
