@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>DFD L2 — P7 LED Actuation</title>
+<link rel="stylesheet" href="styles.css"/>
+</head><body>
+<header>
+  <h1>DFD L2 — P7 LED Actuation</h1>
+  <nav><a href="index.html">← back to index</a></nav>
+</header>
+<main>
+<div class="diagram-card">
+  <div id="diagram"></div>
+  <p class="caption">R5 polling loop reads shm_alert, masks/ORs flag bits, writes AXI GPIO MMIO register.</p>
+  
+<div class="legend">
+  <span><i class="process"></i> Process</span>
+  <span><i class="store"></i> Data store</span>
+  <span><i class="entity"></i> External entity</span>
+</div>
+
+  
+</div>
+</main>
+<footer>Master Draft — Embedded Edge Vision AI on AMD Kria SoM</footer>
+<script src="diagrams.js"></script>
+<script>
+document.getElementById('diagram').innerHTML = D.svg(760, 320, `<circle cx="140" cy="150" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="140" y="132" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P7.1</text>
+<text x="140" y="146" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">R5 poll</text>
+<text x="140" y="160" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">shm_alert</text>
+<circle cx="340" cy="150" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="340" y="132" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P7.2</text>
+<text x="340" y="146" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">mask + OR</text>
+<text x="340" y="160" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">flag bits</text>
+<circle cx="540" cy="150" r="55" fill="url(#processGrad)" filter="url(#dropShadow)" stroke="#12366B" stroke-width="1.5"/>
+<text x="540" y="132" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">P7.3</text>
+<text x="540" y="146" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">MMIO write</text>
+<text x="540" y="160" text-anchor="middle" font-size="11" font-weight="normal" fill="#0F2A4D">AXI GPIO</text>
+<line x1="195" y1="150" x2="285" y2="150" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="240" y="146" text-anchor="middle" font-size="10" fill="#0F2A4D" style="paint-order:stroke; stroke:white; stroke-width:3px;">flags</text>
+<line x1="395" y1="150" x2="485" y2="150" stroke="#12366B" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="440" y="146" text-anchor="middle" font-size="10" fill="#0F2A4D" style="paint-order:stroke; stroke:white; stroke-width:3px;">data reg</text>
+<rect x="620" y="130" width="110" height="40" fill="url(#entityGrad)" filter="url(#dropShadow)" stroke="#0369a1" rx="4"/>
+<text x="675" y="155" text-anchor="middle" font-size="11" font-weight="600" fill="#0F2A4D">PMOD LEDs</text>`);
+</script>
+</body></html>
