@@ -1,0 +1,4 @@
+all:
+{
+    [destination_device = pl] kv260_vcuDecode_vmixDP_wrapper.bit
+}

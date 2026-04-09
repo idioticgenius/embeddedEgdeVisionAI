@@ -1,0 +1,463 @@
+/dts-v1/;
+
+/ {
+
+	fragment@0 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			#address-cells = <0x02>;
+			#size-cells = <0x02>;
+			firmware-name = "kv260_vcuDecode_vmixDP_wrapper.bit.bin";
+			resets = <0xffffffff 0x74 0xffffffff 0x75 0xffffffff 0x76 0xffffffff 0x77>;
+		};
+	};
+
+	fragment@1 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			status = "okay";
+			clocks = <0xffffffff 0xffffffff 0x11 0xffffffff 0x10 0x01 0x00>;
+			clock-names = "dp_apb_clk\0dp_aud_clk\0dp_vtc_pixel_clk_in\0dp_live_video_in_clk";
+			xlnx,bridge = <0x02>;
+
+			port@0 {
+				reg = <0x00>;
+				phandle = <0x0e>;
+
+				endpoint {
+					remote-endpoint = <0x03>;
+					phandle = <0x08>;
+				};
+			};
+		};
+	};
+
+	fragment@2 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@3 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@4 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@5 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@6 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+
+			afi0 {
+				compatible = "xlnx,afi-fpga";
+				config-afi = <0x00 0x00 0x01 0x00 0x02 0x00 0x03 0x00 0x04 0x01 0x05 0x01 0x06 0x00 0x07 0x00 0x08 0x00 0x09 0x00 0x0a 0x02 0x0b 0x02 0x0c 0x02 0x0d 0x02 0x0e 0x00 0x0f 0x00>;
+				phandle = <0x0f>;
+			};
+
+			clocking0 {
+				#clock-cells = <0x00>;
+				assigned-clock-rates = <0x5f5dd19>;
+				assigned-clocks = <0xffffffff 0x47>;
+				clock-output-names = "fabric_clk";
+				clocks = <0xffffffff 0x47>;
+				compatible = "xlnx,fclk";
+				phandle = <0x10>;
+			};
+
+			misc_clk_0 {
+				#clock-cells = <0x00>;
+				clock-frequency = <0x10642002>;
+				compatible = "fixed-clock";
+				phandle = <0x07>;
+			};
+
+			misc_clk_1 {
+				#clock-cells = <0x00>;
+				clock-frequency = <0x20c84004>;
+				compatible = "fixed-clock";
+				phandle = <0x09>;
+			};
+
+			misc_clk_2 {
+				#clock-cells = <0x00>;
+				clock-frequency = <0x5f5dd18>;
+				compatible = "fixed-clock";
+				phandle = <0x05>;
+			};
+
+			misc_clk_3 {
+				#clock-cells = <0x00>;
+				clock-frequency = <0xd693176>;
+				compatible = "fixed-clock";
+				phandle = <0x0a>;
+			};
+
+			misc_clk_4 {
+				#clock-cells = <0x00>;
+				clock-frequency = <0x2faee8c>;
+				compatible = "fixed-clock";
+				phandle = <0x04>;
+			};
+
+			vcu@80100000 {
+				#address-cells = <0x02>;
+				#clock-cells = <0x01>;
+				#size-cells = <0x02>;
+				clock-names = "pll_ref\0aclk\0vcu_core_enc\0vcu_mcu_enc\0vcu_core_dec\0vcu_mcu_dec";
+				clocks = <0x04 0x05 0x06 0x00 0x06 0x01 0x06 0x02 0x06 0x03>;
+				compatible = "xlnx,vcu-1.2\0xlnx,vcu";
+				interrupt-names = "vcu_host_interrupt";
+				interrupt-parent = <0xffffffff>;
+				interrupts = <0x00 0x6a 0x04>;
+				ranges;
+				reg = <0x00 0x80140000 0x00 0x1000 0x00 0x80141000 0x00 0x1000>;
+				reg-names = "vcu_slcr\0logicore";
+				reset-gpios = <0xffffffff 0x4f 0x00>;
+				phandle = <0x06>;
+
+				al5d@80120000 {
+					compatible = "al,al5d-1.2\0al,al5d";
+					interrupt-parent = <0xffffffff>;
+					interrupts = <0x00 0x6a 0x04>;
+					reg = <0x00 0x80120000 0x00 0x10000>;
+					phandle = <0x11>;
+				};
+			};
+
+			clock-generator@80000000 {
+				#address-cells = <0x02>;
+				#clock-cells = <0x01>;
+				clock-names = "clk_in1\0s_axi_aclk";
+				clock-output-names = "clk_out1";
+				clocks = <0x07 0x05>;
+				compatible = "xlnx,clocking-wizard";
+				reg = <0x00 0x80000000 0x00 0x10000>;
+				speed-grade = <0x02>;
+				phandle = <0x01>;
+			};
+
+			v_tc@80010000 {
+				clock-names = "clk\0s_axi_aclk";
+				clocks = <0x01 0x00 0x05>;
+				compatible = "xlnx,bridge-v-tc-6.1";
+				reg = <0x00 0x80010000 0x00 0x10000>;
+				xlnx,generator;
+				xlnx,pixels-per-clock = <0x01>;
+				phandle = <0x02>;
+			};
+
+			v_mix@B0000000 {
+				clocks = <0x07>;
+				compatible = "xlnx,v-mix-5.2\0xlnx,mixer-3.0\0xlnx,mixer-4.0\0xlnx,mixer-5.0";
+				interrupt-names = "interrupt";
+				interrupt-parent = <0xffffffff>;
+				interrupts = <0x00 0x68 0x04>;
+				reg = <0x00 0xb0000000 0x00 0x10000>;
+				xlnx,bpc = <0x08>;
+				xlnx,dma-addr-width = <0x20>;
+				xlnx,num-layers = <0x06>;
+				xlnx,ppc = <0x01>;
+				xlnx,disp-bridge = <0xffffffff>;
+				reset-gpios = <0xffffffff 0x4e 0x01>;
+				phandle = <0x12>;
+
+				port {
+					reg = <0x00>;
+					phandle = <0x13>;
+
+					endpoint@0 {
+						reg = <0x00>;
+						remote-endpoint = <0x08>;
+						phandle = <0x03>;
+					};
+				};
+
+				layer_0 {
+					xlnx,layer-id = <0x00>;
+					xlnx,layer-max-height = <0x870>;
+					xlnx,layer-max-width = <0xf00>;
+					xlnx,layer-primary;
+					xlnx,vformat = "NV16";
+				};
+
+				layer_1 {
+					xlnx,layer-id = <0x01>;
+					xlnx,layer-max-width = <0xf00>;
+					xlnx,vformat = "NV12";
+				};
+
+				layer_2 {
+					xlnx,layer-id = <0x02>;
+					xlnx,layer-max-width = <0xf00>;
+					xlnx,vformat = "NV12";
+				};
+
+				layer_3 {
+					xlnx,layer-id = <0x03>;
+					xlnx,layer-max-width = <0xf00>;
+					xlnx,vformat = "NV12";
+				};
+
+				layer_4 {
+					xlnx,layer-id = <0x04>;
+					xlnx,layer-max-width = <0xf00>;
+					xlnx,vformat = "NV12";
+				};
+
+				layer_5 {
+					xlnx,layer-id = <0x05>;
+					xlnx,layer-max-width = <0xf00>;
+					xlnx,vformat = "AR24";
+				};
+			};
+
+			gpio@a0010000 {
+				#gpio-cells = <0x02>;
+				clock-names = "s_axi_aclk";
+				clocks = <0x05>;
+				compatible = "xlnx,xps-gpio-1.00.a";
+				gpio-controller;
+				reg = <0x00 0xa0010000 0x00 0x10000>;
+				xlnx,all-outputs = <0x01>;
+				xlnx,gpio-width = <0x04>;
+				xlnx,is-dual = <0x00>;
+				phandle = <0x14>;
+			};
+
+			DPUCZDX8G@a0020000 {
+				clock-names = "aclk\0ap_clk_2";
+				clocks = <0x07 0x09>;
+				compatible = "xlnx,DPUCZDX8G-1.0";
+				interrupt-names = "interrupt";
+				interrupt-parent = <0xffffffff>;
+				interrupts = <0x00 0x5a 0x04>;
+				reg = <0x00 0xa0020000 0x00 0x10000>;
+				phandle = <0x15>;
+			};
+
+			image_processing@a0030000 {
+				clock-names = "ap_clk";
+				clocks = <0x0a>;
+				compatible = "xlnx,image-processing-1.0";
+				interrupt-names = "interrupt";
+				interrupt-parent = <0xffffffff>;
+				interrupts = <0x00 0x59 0x04>;
+				reg = <0x00 0xa0030000 0x00 0x10000>;
+				xlnx,s-axi-ctrl-addr-width = <0x07>;
+				xlnx,s-axi-ctrl-data-width = <0x20>;
+				phandle = <0x16>;
+			};
+
+			zyxclmm_drm {
+				compatible = "xlnx,zocl";
+				status = "okay";
+				interrupt-parent = <0xffffffff>;
+				interrupts = <0x00 0x59 0x04 0x00 0x5a 0x04 0x00 0x5b 0x04 0x00 0x5c 0x04 0x00 0x5d 0x04 0x00 0x5e 0x04 0x00 0x5f 0x04 0x00 0x60 0x04>;
+				phandle = <0x17>;
+			};
+		};
+	};
+
+	fragment@7 {
+		target-path = "/";
+
+		__overlay__ {
+
+			tcm_0a@ffe00000 {
+				compatible = "mmio-sram";
+				status = "okay";
+				reg = <0x00 0xffe00000 0x00 0x10000>;
+				power-domain = <0xffffffff 0x0f>;
+				phandle = <0x0b>;
+			};
+
+			tcm_0b@ffe20000 {
+				compatible = "mmio-sram";
+				status = "okay";
+				reg = <0x00 0xffe20000 0x00 0x10000>;
+				power-domain = <0xffffffff 0x10>;
+				phandle = <0x0c>;
+			};
+
+			rf5ss@ff9a0000 {
+				compatible = "xlnx,zynqmp-r5-remoteproc";
+				xlnx,cluster-mode = <0x00>;
+				reg = <0x00 0xff9a0000 0x00 0x10000>;
+				#address-cells = <0x02>;
+				#size-cells = <0x02>;
+				ranges;
+
+				r5f_0 {
+					compatible = "xilinx,r5f";
+					sram = <0x0b 0x0c>;
+					memory-region = <0xffffffff 0xffffffff 0xffffffff 0xffffffff>;
+					power-domain = <0xffffffff 0x07>;
+					mboxes = <0x0d 0x00 0x0d 0x01>;
+					mbox-names = "tx\0rx";
+				};
+			};
+
+			zynqmp_ipi1 {
+				compatible = "xlnx,zynqmp-ipi-mailbox";
+				interrupt-parent = <0xffffffff>;
+				interrupts = <0x00 0x1d 0x04>;
+				xlnx,ipi-id = <0x07>;
+				#address-cells = <0x01>;
+				#size-cells = <0x01>;
+				ranges;
+				phandle = <0x18>;
+
+				mailbox@ff990600 {
+					reg = <0xff990600 0x20 0xff990620 0x20 0xff9900c0 0x20 0xff9900e0 0x20>;
+					reg-names = "local_request_region\0local_response_region\0remote_request_region\0remote_response_region";
+					#mbox-cells = <0x01>;
+					xlnx,ipi-id = <0x01>;
+					phandle = <0x0d>;
+				};
+			};
+		};
+	};
+
+	__symbols__ {
+		dp_port = "/fragment@1/__overlay__/port@0";
+		dp_encoder = "/fragment@1/__overlay__/port@0/endpoint";
+		afi0 = "/fragment@6/__overlay__/afi0";
+		clocking0 = "/fragment@6/__overlay__/clocking0";
+		misc_clk_0 = "/fragment@6/__overlay__/misc_clk_0";
+		misc_clk_1 = "/fragment@6/__overlay__/misc_clk_1";
+		misc_clk_2 = "/fragment@6/__overlay__/misc_clk_2";
+		misc_clk_3 = "/fragment@6/__overlay__/misc_clk_3";
+		misc_clk_4 = "/fragment@6/__overlay__/misc_clk_4";
+		vcu = "/fragment@6/__overlay__/vcu@80100000";
+		al5d = "/fragment@6/__overlay__/vcu@80100000/al5d@80120000";
+		dp_video_clk = "/fragment@6/__overlay__/clock-generator@80000000";
+		v_tc = "/fragment@6/__overlay__/v_tc@80010000";
+		v_mix = "/fragment@6/__overlay__/v_mix@B0000000";
+		mixer_port = "/fragment@6/__overlay__/v_mix@B0000000/port";
+		mixer_crtc = "/fragment@6/__overlay__/v_mix@B0000000/port/endpoint@0";
+		axi_gpio_0 = "/fragment@6/__overlay__/gpio@a0010000";
+		DPUCZDX8G_1 = "/fragment@6/__overlay__/DPUCZDX8G@a0020000";
+		image_processing_1 = "/fragment@6/__overlay__/image_processing@a0030000";
+		zocl = "/fragment@6/__overlay__/zyxclmm_drm";
+		tcm_0a = "/fragment@7/__overlay__/tcm_0a@ffe00000";
+		tcm_0b = "/fragment@7/__overlay__/tcm_0b@ffe20000";
+		zynqmp_ipi1 = "/fragment@7/__overlay__/zynqmp_ipi1";
+		ipi_mailbox_rpu0 = "/fragment@7/__overlay__/zynqmp_ipi1/mailbox@ff990600";
+	};
+
+	__fixups__ {
+		fpga_full = "/fragment@0:target:0";
+		zynqmp_reset = "/fragment@0/__overlay__:resets:0\0/fragment@0/__overlay__:resets:8\0/fragment@0/__overlay__:resets:16\0/fragment@0/__overlay__:resets:24";
+		zynqmp_dpsub = "/fragment@1:target:0\0/fragment@6/__overlay__/v_mix@B0000000:xlnx,disp-bridge:0";
+		dp_aclk = "/fragment@1/__overlay__:clocks:0";
+		zynqmp_clk = "/fragment@1/__overlay__:clocks:4\0/fragment@1/__overlay__:clocks:12\0/fragment@6/__overlay__/clocking0:assigned-clocks:0\0/fragment@6/__overlay__/clocking0:clocks:0";
+		zynqmp_dp_snd_pcm0 = "/fragment@2:target:0";
+		zynqmp_dp_snd_pcm1 = "/fragment@3:target:0";
+		zynqmp_dp_snd_card0 = "/fragment@4:target:0";
+		zynqmp_dp_snd_codec0 = "/fragment@5:target:0";
+		amba = "/fragment@6:target:0";
+		gic = "/fragment@6/__overlay__/vcu@80100000:interrupt-parent:0\0/fragment@6/__overlay__/vcu@80100000/al5d@80120000:interrupt-parent:0\0/fragment@6/__overlay__/v_mix@B0000000:interrupt-parent:0\0/fragment@6/__overlay__/DPUCZDX8G@a0020000:interrupt-parent:0\0/fragment@6/__overlay__/image_processing@a0030000:interrupt-parent:0\0/fragment@6/__overlay__/zyxclmm_drm:interrupt-parent:0\0/fragment@7/__overlay__/zynqmp_ipi1:interrupt-parent:0";
+		gpio = "/fragment@6/__overlay__/vcu@80100000:reset-gpios:0\0/fragment@6/__overlay__/v_mix@B0000000:reset-gpios:0";
+		zynqmp_firmware = "/fragment@7/__overlay__/tcm_0a@ffe00000:power-domain:0\0/fragment@7/__overlay__/tcm_0b@ffe20000:power-domain:0\0/fragment@7/__overlay__/rf5ss@ff9a0000/r5f_0:power-domain:0";
+		rproc_0_reserved = "/fragment@7/__overlay__/rf5ss@ff9a0000/r5f_0:memory-region:0";
+		rpu0vdev0buffer = "/fragment@7/__overlay__/rf5ss@ff9a0000/r5f_0:memory-region:4";
+		rpu0vdev0vring0 = "/fragment@7/__overlay__/rf5ss@ff9a0000/r5f_0:memory-region:8";
+		rpu0vdev0vring1 = "/fragment@7/__overlay__/rf5ss@ff9a0000/r5f_0:memory-region:12";
+	};
+
+	__local_fixups__ {
+
+		fragment@1 {
+
+			__overlay__ {
+				clocks = <0x14>;
+				xlnx,bridge = <0x00>;
+
+				port@0 {
+
+					endpoint {
+						remote-endpoint = <0x00>;
+					};
+				};
+			};
+		};
+
+		fragment@6 {
+
+			__overlay__ {
+
+				vcu@80100000 {
+					clocks = <0x00 0x04 0x08 0x10 0x18 0x20>;
+				};
+
+				clock-generator@80000000 {
+					clocks = <0x00 0x04>;
+				};
+
+				v_tc@80010000 {
+					clocks = <0x00 0x08>;
+				};
+
+				v_mix@B0000000 {
+					clocks = <0x00>;
+
+					port {
+
+						endpoint@0 {
+							remote-endpoint = <0x00>;
+						};
+					};
+				};
+
+				gpio@a0010000 {
+					clocks = <0x00>;
+				};
+
+				DPUCZDX8G@a0020000 {
+					clocks = <0x00 0x04>;
+				};
+
+				image_processing@a0030000 {
+					clocks = <0x00>;
+				};
+			};
+		};
+
+		fragment@7 {
+
+			__overlay__ {
+
+				rf5ss@ff9a0000 {
+
+					r5f_0 {
+						sram = <0x00 0x04>;
+						mboxes = <0x00 0x08>;
+					};
+				};
+			};
+		};
+	};
+};
