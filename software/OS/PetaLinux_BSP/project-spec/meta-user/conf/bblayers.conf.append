@@ -1,0 +1,74 @@
+# bblayers.conf.append — recipe layer audit for the multichannel-openamp-gpio
+# runtime packages.
+#
+# This file is documentation. PetaLinux 2022.2 does not auto-merge
+# bblayers.conf.append fragments into BBLAYERS. The actual layer list is at
+# components/yocto/conf/bblayers.conf.
+#
+# AUDIT RESULT
+# ============
+# All required Yocto layers are already enabled in the upstream
+# bblayers.conf. No layer additions are needed. The 22 packages added
+# through IMAGE_INSTALL:append in petalinuxbsp.conf resolve cleanly from
+# the existing layer set.
+#
+# Per-package layer resolution:
+#
+#   vitis-ai-library              meta-vitis
+#   vart                          meta-vitis
+#   vvas-utils                    meta-vitis
+#   vvas-gst                      meta-vitis
+#   vvas-accel-libs               meta-vitis
+#   libvcu-xlnx                   meta-xilinx/meta-xilinx-core
+#   libomxil-xlnx                 meta-xilinx/meta-xilinx-core
+#   gstreamer1.0-omx              meta-xilinx/meta-xilinx-core
+#   xlnx-platformstats            meta-som
+#   xlnx-platformstats-python     meta-som
+#   xmutil                        meta-som
+#   kria-dashboard                meta-som
+#   fpga-manager-util-xilinx      meta-som
+#   fpga-manager-util-base-xilinx meta-som
+#   packagegroup-petalinux-vvas   meta-petalinux
+#   packagegroup-petalinux-openamp-echo-test  meta-petalinux
+#   packagegroup-petalinux-openamp-rpc-demo   meta-petalinux
+#   packagegroup-petalinux-openamp-matrix-mul meta-petalinux
+#   openamp-demo-notebooks        meta-petalinux
+#   python3-pyserial              meta-openembedded/meta-python
+#
+# Three packages do NOT resolve from the upstream layer set:
+#
+#   vvas-core    — provided by meta-xilinx-vvas (an external AMD layer
+#                  that is bundled with the Vitis Acceleration BSP). The
+#                  upstream meta-vitis includes vvas-utils + vvas-gst but
+#                  not vvas-core. To install vvas-core through Yocto, add
+#                  meta-xilinx-vvas to BBLAYERS — see "Optional layer
+#                  additions" below.
+#   libjansson4  — pulled in transitively by vvas-core, so it appears on
+#                  the board only when vvas-core is installed. If the
+#                  Yocto build cannot resolve libjansson4 directly, add
+#                  meta-openembedded/meta-oe (it is in the upstream
+#                  bblayers.conf already, so this should not be needed).
+#   fpga-manager-util-xilinx — meta-som provides this; if it does not
+#                  resolve, the package may have been renamed in newer
+#                  releases. Check meta-som/recipes-bsp/.
+#
+# OPTIONAL LAYER ADDITIONS
+# ========================
+# To install vvas-core (and the full VVAS stack as installed on the
+# production board), append the following to
+# components/yocto/conf/bblayers.conf before the closing quote:
+#
+#   ${SDKBASEMETAPATH}/layers/meta-xilinx-vvas \
+#
+# The layer source is at https://github.com/Xilinx/meta-xilinx-vvas. The
+# branch must match the PetaLinux 2022.2 release (typically rel-v2022.2
+# or xlnx_rel_v2022.2).
+#
+# RUN-TIME FALLBACK
+# =================
+# If a package fails to resolve at petalinux-build time, it can be
+# installed at run time on the board through dnf. The script
+# Shell_Scripts/install-firmware-packages.sh covers all 22 packages and
+# uses dnf install with the PetaLinux feeds. That script is the
+# preferred path for adding packages to a board image that has already
+# been flashed.

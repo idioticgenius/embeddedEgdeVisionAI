@@ -1,0 +1,49 @@
+#Note: Mention Each package in individual line
+#These packages will get added into rootfs menu entry
+
+CONFIG_gpio-demo
+CONFIG_peekpoke
+CONFIG_packagegroup-petalinux-som
+
+# ----------------------------------------------------------------------------
+# multichannel-openamp-gpio runtime packages (added 2026-04-30)
+#
+# Per AMD UG1144 PetaLinux Tools Reference Guide v2022.2 ("Appending Root File
+# System Packages"), the canonical way to add custom packages from 2020.1
+# onwards is to list them here as `CONFIG_<packagename>` (one per line, no
+# `=y` suffix). After editing this file, run:
+#
+#     petalinux-config -c rootfs
+#
+# Navigate to "user packages" and toggle each entry on, then save. The
+# Kconfig system writes the corresponding `CONFIG_<name>=y` lines into
+# project-spec/configs/rootfs_config.
+#
+# References:
+#   - UG1144 v2022.2 §"Appending Root File System Packages"
+#   - https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide
+#   - https://xilinx.github.io/Vitis-Tutorials/2022-1/...02_petalinux_customization
+# ----------------------------------------------------------------------------
+
+CONFIG_vitis-ai-library
+CONFIG_vart
+CONFIG_vvas-core
+CONFIG_vvas-utils
+CONFIG_vvas-gst
+CONFIG_vvas-accel-libs
+CONFIG_packagegroup-petalinux-vvas
+CONFIG_libjansson4
+CONFIG_libvcu-xlnx
+CONFIG_libomxil-xlnx
+CONFIG_xlnx-platformstats
+CONFIG_xlnx-platformstats-python
+CONFIG_xmutil
+CONFIG_fpga-manager-util-xilinx
+CONFIG_fpga-manager-util-base-xilinx
+CONFIG_kria-dashboard
+CONFIG_packagegroup-petalinux-openamp-echo-test
+CONFIG_packagegroup-petalinux-openamp-rpc-demo
+CONFIG_packagegroup-petalinux-openamp-matrix-mul
+CONFIG_openamp-demo-notebooks
+CONFIG_python3-pyserial
+CONFIG_gstreamer1.0-omx
