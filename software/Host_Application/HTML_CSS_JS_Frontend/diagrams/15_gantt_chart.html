@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>Project Gantt Chart</title>
+<link rel="stylesheet" href="styles.css"/>
+</head><body>
+<header>
+  <h1>Project Gantt Chart</h1>
+  <nav><a href="index.html">← back to index</a></nav>
+</header>
+<main>
+<div class="diagram-card">
+  <div id="diagram"></div>
+  <p class="caption">Four iteration cycles, planned versus actual durations.
+  Cycle 1 on schedule. Cycle 2 over-ran by 5 days on the v_mix BRAM utilisation issue.
+  Cycle 3 over-ran by 1 week on the rpmsg-to-TCM migration. Cycle 4 on schedule.
+  Cumulative slip ~10 working days, recovered in the documentation phase.</p>
+</div>
+</main>
+<footer>Master Draft — Embedded Edge Vision AI on AMD Kria SoM</footer>
+<script src="diagrams.js"></script>
+<script>
+const W = 1100, H = 540;
+const tasks = [
+  {name: 'Cycle 1 — single-camera proof-of-concept', planStart: 0,  planEnd: 14, actStart: 0,  actEnd: 14, status: 'on'},
+  {name: 'Cycle 2 — four-stream + UI',                planStart: 14, planEnd: 35, actStart: 14, actEnd: 40, status: 'over'},
+  {name: 'Cycle 3 — RPU enablement',                   planStart: 35, planEnd: 56, actStart: 40, actEnd: 68, status: 'over'},
+  {name: 'Cycle 4 — hardening + soak',                 planStart: 56, planEnd: 77, actStart: 68, actEnd: 89, status: 'on'},
+  {name: 'Documentation phase',                        planStart: 77, planEnd: 91, actStart: 89, actEnd: 99, status: 'compressed'},
+];
+
+const milestones = [
+  {day: 14, label: 'M1 PoC demo'},
+  {day: 35, label: 'M2 4-ch UI demo'},
+  {day: 56, label: 'M3 R5 mailbox'},
+  {day: 77, label: 'M4 soak passed'},
+  {day: 91, label: 'M5 submission'},
+];
+
+const leftMargin = 320;
+const topMargin = 90;
+const rowH = 60;
+const dayPx = (W - leftMargin - 60) / 99;  // 99 days timeline
+
+let parts = [];
+
+// Title and timeline header
+parts.push(`<text x="${W/2}" y="40" text-anchor="middle" font-size="18" font-weight="700" fill="#0F2A4D">Project Iteration Schedule — Planned vs Actual</text>`);
+
+// Day-axis ticks every 7 days
+for (let d = 0; d <= 99; d += 7) {
+  const x = leftMargin + d * dayPx;
+  parts.push(`<line x1="${x}" y1="${topMargin - 6}" x2="${x}" y2="${topMargin + tasks.length * rowH}" stroke="#e5e7eb" stroke-width="0.5"/>`);
+  parts.push(`<text x="${x}" y="${topMargin - 12}" text-anchor="middle" font-size="10" fill="#6b7280">D${d}</text>`);
+}
+parts.push(`<text x="${leftMargin}" y="${topMargin - 36}" font-size="11" fill="#6b7280">Day-of-project (start = 1 Feb 2026)</text>`);
+
+// Tasks
+for (let i = 0; i < tasks.length; i++) {
+  const t = tasks[i];
+  const y = topMargin + i * rowH + rowH/2;
+  parts.push(`<text x="${leftMargin - 12}" y="${y + 4}" text-anchor="end" font-size="12" font-weight="600" fill="#0F2A4D">${t.name}</text>`);
+
+  // Planned bar (light grey background)
+  const planX = leftMargin + t.planStart * dayPx;
+  const planW = (t.planEnd - t.planStart) * dayPx;
+  parts.push(`<rect x="${planX}" y="${y - 14}" width="${planW}" height="10" fill="#e5e7eb" rx="2"/>`);
+  parts.push(`<text x="${planX + planW + 6}" y="${y - 6}" font-size="9" fill="#9ca3af">planned ${t.planStart}–${t.planEnd}</text>`);
+
+  // Actual bar
+  const actX = leftMargin + t.actStart * dayPx;
+  const actW = (t.actEnd - t.actStart) * dayPx;
+  let fill = '#15803d', stroke = '#14532d';
+  if (t.status === 'over')        { fill = '#ea580c'; stroke = '#9a3412'; }
+  if (t.status === 'compressed')  { fill = '#0F2A4D'; stroke = '#0b1f3b'; }
+  parts.push(`<rect x="${actX}" y="${y + 2}" width="${actW}" height="14" fill="${fill}" stroke="${stroke}" stroke-width="0.8" rx="3" filter="url(#dropShadow)"/>`);
+  parts.push(`<text x="${actX + actW + 6}" y="${y + 13}" font-size="9" fill="#374151">actual ${t.actStart}–${t.actEnd}</text>`);
+
+  // Slip annotation
+  if (t.status === 'over') {
+    const slipDays = (t.actEnd - t.actStart) - (t.planEnd - t.planStart);
+    if (slipDays > 0) {
+      parts.push(`<text x="${actX + actW/2}" y="${y + 12}" text-anchor="middle" font-size="9" font-weight="700" fill="white">+${slipDays}d slip</text>`);
+    }
+  }
+}
+
+// Milestones
+const msY = topMargin + tasks.length * rowH + 20;
+parts.push(`<text x="${leftMargin}" y="${msY + 10}" font-size="11" font-weight="700" fill="#0F2A4D">Milestones</text>`);
+for (const m of milestones) {
+  const x = leftMargin + m.day * dayPx;
+  parts.push(`<polygon points="${x-6},${msY+18} ${x+6},${msY+18} ${x},${msY+30}" fill="#a16207" stroke="#78350f" stroke-width="0.8"/>`);
+  parts.push(`<text x="${x}" y="${msY + 50}" text-anchor="middle" font-size="10" fill="#0F2A4D">${m.label}</text>`);
+  parts.push(`<text x="${x}" y="${msY + 64}" text-anchor="middle" font-size="9" fill="#6b7280">D${m.day}</text>`);
+}
+
+// Legend
+parts.push(`<rect x="${leftMargin}" y="${H - 80}" width="14" height="10" fill="#e5e7eb" rx="2"/>`);
+parts.push(`<text x="${leftMargin + 22}" y="${H - 71}" font-size="10" fill="#374151">Planned</text>`);
+parts.push(`<rect x="${leftMargin + 90}" y="${H - 80}" width="14" height="10" fill="#15803d" rx="2"/>`);
+parts.push(`<text x="${leftMargin + 112}" y="${H - 71}" font-size="10" fill="#374151">Actual — on schedule</text>`);
+parts.push(`<rect x="${leftMargin + 270}" y="${H - 80}" width="14" height="10" fill="#ea580c" rx="2"/>`);
+parts.push(`<text x="${leftMargin + 292}" y="${H - 71}" font-size="10" fill="#374151">Actual — over-ran</text>`);
+parts.push(`<rect x="${leftMargin + 440}" y="${H - 80}" width="14" height="10" fill="#0F2A4D" rx="2"/>`);
+parts.push(`<text x="${leftMargin + 462}" y="${H - 71}" font-size="10" fill="#374151">Compressed (recovery)</text>`);
+
+document.getElementById('diagram').innerHTML = D.svg(W, H, parts.join('\n'));
+</script>
+</body></html>

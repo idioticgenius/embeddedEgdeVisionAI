@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>Risk Register Heatmap</title>
+<link rel="stylesheet" href="styles.css"/>
+</head><body>
+<header>
+  <h1>Risk Register — Planned vs Actualised</h1>
+  <nav><a href="index.html">← back to index</a></nav>
+</header>
+<main>
+<div class="diagram-card">
+  <div id="diagram"></div>
+  <p class="caption">Five-by-five risk heatmap (likelihood × impact) showing
+  the ten risks identified at project start. Three risks materialised:
+  R-02 (BRAM exhaustion), R-04 (rpmsg latency), R-09 (USB bandwidth).
+  R-07 (quantisation accuracy) was rated medium-medium at start but did not
+  materialise. The other six risks did not occur.</p>
+</div>
+</main>
+<footer>Master Draft — Embedded Edge Vision AI on AMD Kria SoM</footer>
+<script src="diagrams.js"></script>
+<script>
+const W = 900, H = 560;
+const cellW = 110, cellH = 70;
+const leftM = 100, topM = 90;
+
+const risks = [
+  {id: 'R-01', desc: 'Vivado timing closure failure',         L: 2, I: 4, status: 'avoided'},
+  {id: 'R-02', desc: 'BRAM exhaustion — second CU blocked',    L: 4, I: 4, status: 'materialised'},
+  {id: 'R-03', desc: 'PetaLinux build break on update',        L: 2, I: 3, status: 'avoided'},
+  {id: 'R-04', desc: 'rpmsg cannot meet sub-ms latency',        L: 4, I: 5, status: 'materialised'},
+  {id: 'R-05', desc: 'Camera UVC driver incompatibility',      L: 1, I: 3, status: 'avoided'},
+  {id: 'R-06', desc: 'DPU fingerprint mismatch',                L: 1, I: 5, status: 'avoided'},
+  {id: 'R-07', desc: 'INT8 quant loss > 3 pp',                   L: 3, I: 3, status: 'avoided'},
+  {id: 'R-08', desc: 'kmssink HDMI compatibility',              L: 2, I: 2, status: 'avoided'},
+  {id: 'R-09', desc: 'USB camera bandwidth contention',          L: 3, I: 2, status: 'mild'},
+  {id: 'R-10', desc: 'Power thermal throttling under load',     L: 2, I: 4, status: 'avoided'},
+];
+
+let parts = [];
+
+// Title
+parts.push(`<text x="${W/2}" y="40" text-anchor="middle" font-size="18" font-weight="700" fill="#0F2A4D">Risk Heatmap — Likelihood × Impact</text>`);
+parts.push(`<text x="${W/2}" y="62" text-anchor="middle" font-size="11" fill="#6b7280">Bubble = risk; bubble border colour = outcome</text>`);
+
+// Axis labels
+parts.push(`<text x="${leftM + 2.5*cellW}" y="${topM + 5*cellH + 50}" text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">Likelihood →</text>`);
+parts.push(`<g transform="translate(${leftM - 60},${topM + 2.5*cellH}) rotate(-90)"><text text-anchor="middle" font-size="13" font-weight="600" fill="#0F2A4D">Impact →</text></g>`);
+
+// Heatmap colours: red top-right, green bottom-left
+function cellColor(L, I) {
+  const score = L + I; // 2..10
+  if (score >= 9) return '#fee2e2';
+  if (score >= 7) return '#fed7aa';
+  if (score >= 5) return '#fef9c3';
+  if (score >= 3) return '#dcfce7';
+  return '#f0fdf4';
+}
+
+// Grid cells
+for (let l = 1; l <= 5; l++) {
+  for (let i = 1; i <= 5; i++) {
+    const x = leftM + (l-1) * cellW;
+    const y = topM + (5 - i) * cellH;
+    parts.push(`<rect x="${x}" y="${y}" width="${cellW}" height="${cellH}" fill="${cellColor(l, i)}" stroke="#e5e7eb" stroke-width="0.6"/>`);
+  }
+}
+
+// Axis ticks
+for (let l = 1; l <= 5; l++) {
+  parts.push(`<text x="${leftM + (l-0.5)*cellW}" y="${topM + 5*cellH + 16}" text-anchor="middle" font-size="11" fill="#374151">${l}</text>`);
+}
+for (let i = 1; i <= 5; i++) {
+  parts.push(`<text x="${leftM - 14}" y="${topM + (5 - i + 0.55)*cellH}" text-anchor="middle" font-size="11" fill="#374151">${i}</text>`);
+}
+
+// Risk bubbles
+const offsets = {};  // jitter for overlapping risks
+for (const r of risks) {
+  const key = `${r.L}-${r.I}`;
+  offsets[key] = (offsets[key] || 0) + 1;
+  const dx = (offsets[key] - 1) * 22;
+  const cx = leftM + (r.L - 0.5) * cellW + dx - 18;
+  const cy = topM + (5 - r.I + 0.5) * cellH;
+  let stroke = '#15803d', fill = '#bbf7d0';
+  if (r.status === 'materialised') { stroke = '#b91c1c'; fill = '#fee2e2'; }
+  if (r.status === 'mild')          { stroke = '#d97706'; fill = '#fef3c7'; }
+  parts.push(`<circle cx="${cx}" cy="${cy}" r="14" fill="${fill}" stroke="${stroke}" stroke-width="2" filter="url(#dropShadow)"/>`);
+  parts.push(`<text x="${cx}" y="${cy + 4}" text-anchor="middle" font-size="9" font-weight="700" fill="#0F2A4D">${r.id}</text>`);
+}
+
+// Legend
+const lgY = topM + 5*cellH + 60;
+parts.push(`<text x="${leftM}" y="${lgY}" font-size="11" font-weight="700" fill="#0F2A4D">Outcome</text>`);
+parts.push(`<circle cx="${leftM + 14}" cy="${lgY + 18}" r="9" fill="#bbf7d0" stroke="#15803d" stroke-width="2"/>`);
+parts.push(`<text x="${leftM + 30}" y="${lgY + 22}" font-size="11" fill="#374151">Avoided</text>`);
+parts.push(`<circle cx="${leftM + 110}" cy="${lgY + 18}" r="9" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>`);
+parts.push(`<text x="${leftM + 126}" y="${lgY + 22}" font-size="11" fill="#374151">Materialised mildly</text>`);
+parts.push(`<circle cx="${leftM + 270}" cy="${lgY + 18}" r="9" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>`);
+parts.push(`<text x="${leftM + 286}" y="${lgY + 22}" font-size="11" fill="#374151">Materialised — fully mitigated</text>`);
+
+// Risk descriptions panel on right
+const panelX = leftM + 5*cellW + 30;
+parts.push(`<text x="${panelX}" y="${topM + 4}" font-size="12" font-weight="700" fill="#0F2A4D">Risk register</text>`);
+let py = topM + 26;
+for (const r of risks) {
+  let badge = '#15803d';
+  if (r.status === 'materialised') badge = '#b91c1c';
+  if (r.status === 'mild') badge = '#d97706';
+  parts.push(`<circle cx="${panelX + 8}" cy="${py - 4}" r="5" fill="${badge}"/>`);
+  parts.push(`<text x="${panelX + 22}" y="${py}" font-size="10" font-weight="600" fill="#0F2A4D">${r.id}</text>`);
+  parts.push(`<text x="${panelX + 60}" y="${py}" font-size="10" fill="#374151">${r.desc.length > 32 ? r.desc.slice(0,30)+'…' : r.desc}</text>`);
+  py += 18;
+}
+
+document.getElementById('diagram').innerHTML = D.svg(W, H, parts.join('\n'));
+</script>
+</body></html>
