@@ -1,0 +1,400 @@
+[15088.988282] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(54147) has open context for 0 slot
+[15088.988290] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [0]
+[15088.988298] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(54147) del context Domain(0) CU(0x0)
+[15088.988320] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=6
+[15088.988340] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(54147)
+[15088.988410] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(54147) has open context for 0 slot
+[15088.988419] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [0]
+[15088.988428] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(54147) del context Domain(0) CU(0x0)
+[15088.988444] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15088.988464] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(54147)
+[15088.988522] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(54147) has open context for 0 slot
+[15088.988530] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15088.988538] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(54147) del context Domain(0) CU(0x1)
+[15088.988556] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=4
+[15088.988576] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(54147)
+[15088.988628] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(54147) has open context for 0 slot
+[15088.988636] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15088.988645] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(54147) del context Domain(0) CU(0x1)
+[15088.988662] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=3
+[15088.988681] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(54147)
+[15088.988735] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(54147) has open context for 0 slot
+[15088.988743] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15088.988751] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(54147) del context Domain(0) CU(0x1)
+[15088.988768] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=2
+[15088.988788] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(54147)
+[15088.988839] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(54147) has open context for 0 slot
+[15088.988848] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15088.988856] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(54147) del context Domain(0) CU(0x1)
+[15088.988872] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=1
+[15088.988892] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(54147)
+[15088.990368] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(54147) has open context for 0 slot
+[15088.990381] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15088.990391] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(54147) del context Domain(0) CU(0x1)
+[15088.990415] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=0
+[15088.990439] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(54147)
+[15088.990625] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(54147)
+[15096.666740] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15096.666820] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15096.667034] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15096.667086] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15096.728813] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15096.728914] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15097.069138] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15097.069228] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15097.409280] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15097.409392] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15097.749130] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15097.749208] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15098.246555] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.246641] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15098.246768] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.246818] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15098.246995] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.247136] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15098.260655] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.260737] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15098.260885] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.313758] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[15098.313779] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+[15098.313792] [drm] zocl_xclbin_read_axlf e2ed9314-41b9-da7a-98a2-748f7ee24801 ret: 0
+[15098.350992] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=1
+[15098.351034] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(65535) CU(0xffff) shared(true)
+[15098.351082] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(65535) CU(0xffff)
+[15098.351094] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=0
+[15098.355320] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.355398] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15098.355546] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.355750] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=1
+[15098.355772] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(0) CU(0x1) shared(true)
+[15098.355964] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.356016] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15098.356137] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.356221] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=2
+[15098.356238] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(0) CU(0x1) shared(true)
+[15098.557869] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.557951] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15098.558090] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.558212] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=3
+[15098.558233] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(0) CU(0x1) shared(true)
+[15098.759798] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.759879] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15098.760014] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.760149] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=4
+[15098.760170] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(0) CU(0x1) shared(true)
+[15098.994677] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.994761] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15098.994911] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15098.995042] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=5
+[15098.995062] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(0) CU(0x1) shared(true)
+[15099.036679] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.036762] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15099.036912] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.103587] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[15099.103609] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+[15099.103624] [drm] zocl_xclbin_read_axlf e2ed9314-41b9-da7a-98a2-748f7ee24801 ret: 0
+[15099.131060] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=6
+[15099.131111] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(65535) CU(0xffff) shared(true)
+[15099.131161] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(65535) CU(0xffff)
+[15099.131173] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15099.132409] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.132488] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15099.132645] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.199821] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[15099.199843] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+[15099.199859] [drm] zocl_xclbin_read_axlf e2ed9314-41b9-da7a-98a2-748f7ee24801 ret: 0
+[15099.227311] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=6
+[15099.227350] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(65535) CU(0xffff) shared(true)
+[15099.227396] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(65535) CU(0xffff)
+[15099.227409] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15099.228624] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.228705] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15099.228861] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.295837] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[15099.295859] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+[15099.295874] [drm] zocl_xclbin_read_axlf e2ed9314-41b9-da7a-98a2-748f7ee24801 ret: 0
+[15099.323476] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=6
+[15099.323514] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(65535) CU(0xffff) shared(true)
+[15099.323562] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(65535) CU(0xffff)
+[15099.323575] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15099.324850] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.324928] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15099.325088] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.394248] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[15099.394269] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+[15099.394282] [drm] zocl_xclbin_read_axlf e2ed9314-41b9-da7a-98a2-748f7ee24801 ret: 0
+[15099.421834] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=6
+[15099.421874] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(65535) CU(0xffff) shared(true)
+[15099.421923] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(65535) CU(0xffff)
+[15099.421936] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15099.909982] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=6
+[15099.910024] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(0) CU(0x0) shared(true)
+[15099.910119] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=7
+[15099.910141] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(0) CU(0x0) shared(true)
+[15099.910206] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=8
+[15099.910224] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(0) CU(0x0) shared(true)
+[15099.911408] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.911411] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.911423] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.911491] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55283)
+[15099.911492] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55285)
+[15099.911495] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55284)
+[15099.911655] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.911658] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.911660] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.942535] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.942620] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55283)
+[15099.942782] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.943188] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55283)
+[15099.944657] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.944731] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55284)
+[15099.944911] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.945322] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.945576] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55284)
+[15099.945627] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55285)
+[15099.945832] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15099.946231] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55285)
+[15100.897796] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=9
+[15100.897837] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(55233) add context Domain(0) CU(0x0) shared(true)
+[15100.898838] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15100.898912] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55286)
+[15100.899055] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15100.901749] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15100.901827] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55286)
+[15100.901982] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(55233), ret: 0
+[15100.902436] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55286)
+[15122.950705] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55286)
+[15122.953183] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55284)
+[15122.953248] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55285)
+[15122.953302] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55283)
+[15123.002571] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(55233) has open context for 0 slot
+[15123.002596] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [0]
+[15123.002607] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(0) CU(0x0)
+[15123.002631] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=8
+[15123.002645] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15123.002719] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(55233) has open context for 0 slot
+[15123.002727] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [0]
+[15123.002736] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(0) CU(0x0)
+[15123.002755] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=7
+[15123.002783] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15123.002853] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(55233) has open context for 0 slot
+[15123.002861] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [0]
+[15123.002870] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(0) CU(0x0)
+[15123.002887] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=6
+[15123.002912] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15123.002978] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(55233) has open context for 0 slot
+[15123.002986] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [0]
+[15123.002995] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(0) CU(0x0)
+[15123.003012] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15123.003031] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15123.003088] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(55233) has open context for 0 slot
+[15123.003097] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15123.003105] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(0) CU(0x1)
+[15123.003122] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=4
+[15123.003142] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15123.003194] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(55233) has open context for 0 slot
+[15123.003202] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15123.003211] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(0) CU(0x1)
+[15123.003227] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=3
+[15123.003247] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15123.003299] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(55233) has open context for 0 slot
+[15123.003307] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15123.003315] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(0) CU(0x1)
+[15123.003332] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=2
+[15123.003352] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15123.003404] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(55233) has open context for 0 slot
+[15123.003412] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15123.003420] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(0) CU(0x1)
+[15123.003436] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=1
+[15123.003456] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15123.004379] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(55233) has open context for 0 slot
+[15123.004387] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15123.004396] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(55233) del context Domain(0) CU(0x1)
+[15123.004414] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=0
+[15123.004434] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15123.004793] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(55233)
+[15199.199258] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.199340] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15199.199561] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.199613] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15199.407072] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.407157] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15199.407284] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.407349] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15199.407557] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.407706] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15199.421648] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.421739] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15199.421895] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.481378] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[15199.481401] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+[15199.481416] [drm] zocl_xclbin_read_axlf e2ed9314-41b9-da7a-98a2-748f7ee24801 ret: 0
+[15199.519970] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=1
+[15199.520013] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(65535) CU(0xffff) shared(true)
+[15199.520058] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(65535) CU(0xffff)
+[15199.520071] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=0
+[15199.524213] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.524292] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15199.524438] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.524649] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=1
+[15199.524671] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(0) CU(0x1) shared(true)
+[15199.524863] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.524915] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15199.525040] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.525124] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=2
+[15199.525141] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(0) CU(0x1) shared(true)
+[15199.735460] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.735555] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15199.735704] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.735833] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=3
+[15199.735854] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(0) CU(0x1) shared(true)
+[15199.947299] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.947384] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15199.947529] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15199.947656] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=4
+[15199.947675] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(0) CU(0x1) shared(true)
+[15200.157333] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15200.157422] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15200.157633] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15200.157795] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=5
+[15200.157814] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(0) CU(0x1) shared(true)
+[15200.364098] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15200.364187] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15200.364340] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15200.435011] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[15200.435031] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+[15200.435046] [drm] zocl_xclbin_read_axlf e2ed9314-41b9-da7a-98a2-748f7ee24801 ret: 0
+[15200.465419] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=6
+[15200.465464] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(65535) CU(0xffff) shared(true)
+[15200.465517] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(65535) CU(0xffff)
+[15200.465529] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15200.467434] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15200.467516] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15200.467685] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15200.539633] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[15200.539655] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+[15200.539672] [drm] zocl_xclbin_read_axlf e2ed9314-41b9-da7a-98a2-748f7ee24801 ret: 0
+[15200.570882] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=6
+[15200.570927] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(65535) CU(0xffff) shared(true)
+[15200.570976] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(65535) CU(0xffff)
+[15200.570990] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15200.573094] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15200.573183] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15200.573361] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15200.650199] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[15200.650222] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+[15200.650239] [drm] zocl_xclbin_read_axlf e2ed9314-41b9-da7a-98a2-748f7ee24801 ret: 0
+[15200.681336] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=6
+[15200.681380] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(65535) CU(0xffff) shared(true)
+[15200.681430] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(65535) CU(0xffff)
+[15200.681443] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15200.683985] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15200.684081] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15200.684276] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15200.758569] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[15200.758591] [drm] zocl_xclbin_read_axlf The XCLBIN already loaded
+[15200.758606] [drm] zocl_xclbin_read_axlf e2ed9314-41b9-da7a-98a2-748f7ee24801 ret: 0
+[15200.788116] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=6
+[15200.788163] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(65535) CU(0xffff) shared(true)
+[15200.788212] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(65535) CU(0xffff)
+[15200.788224] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15201.241518] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=6
+[15201.241568] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(0) CU(0x0) shared(true)
+[15201.242155] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=7
+[15201.242184] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(0) CU(0x0) shared(true)
+[15201.242905] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.242905] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.242984] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57648)
+[15201.242985] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57647)
+[15201.243150] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.243153] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.243888] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=8
+[15201.243916] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(0) CU(0x0) shared(true)
+[15201.244815] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.244891] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57649)
+[15201.245043] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.249930] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.250017] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57648)
+[15201.250270] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.250912] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57648)
+[15201.253145] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.253247] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57649)
+[15201.253439] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.254631] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57649)
+[15201.256583] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.259758] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57647)
+[15201.260011] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.260658] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57647)
+[15201.447172] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.447261] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57648)
+[15201.447418] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.527246] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.527363] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57649)
+[15201.527553] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.539947] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15201.540036] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57647)
+[15201.540197] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15202.171968] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 locked, ref=9
+[15202.172030] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_add_context: Client pid(57605) add context Domain(0) CU(0x0) shared(true)
+[15202.173176] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15202.173256] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57650)
+[15202.173410] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15202.178410] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15202.178492] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57650)
+[15202.178648] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15202.179052] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57650)
+[15202.263230] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15202.263316] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57650)
+[15202.263473] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(57605), ret: 0
+[15223.978838] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57650)
+[15223.980316] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57650)
+[15223.982270] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57647)
+[15223.982393] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57649)
+[15223.982488] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57648)
+[15223.991512] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57649)
+[15223.991686] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57647)
+[15223.991748] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57648)
+[15224.027929] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(57605) has open context for 0 slot
+[15224.027953] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [0]
+[15224.027965] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(0) CU(0x0)
+[15224.027990] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=8
+[15224.028002] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15224.028082] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(57605) has open context for 0 slot
+[15224.028091] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [0]
+[15224.028100] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(0) CU(0x0)
+[15224.028119] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=7
+[15224.028149] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15224.028223] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(57605) has open context for 0 slot
+[15224.028231] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [0]
+[15224.028240] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(0) CU(0x0)
+[15224.028257] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=6
+[15224.028278] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15224.028345] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(57605) has open context for 0 slot
+[15224.028354] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [0]
+[15224.028363] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(0) CU(0x0)
+[15224.028379] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=5
+[15224.028399] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15224.028456] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(57605) has open context for 0 slot
+[15224.028464] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15224.028472] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(0) CU(0x1)
+[15224.028489] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=4
+[15224.028509] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15224.028562] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(57605) has open context for 0 slot
+[15224.028571] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15224.028579] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(0) CU(0x1)
+[15224.028596] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=3
+[15224.028615] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15224.028669] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(57605) has open context for 0 slot
+[15224.028678] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15224.028686] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(0) CU(0x1)
+[15224.028702] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=2
+[15224.028722] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15224.028775] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(57605) has open context for 0 slot
+[15224.028783] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15224.028792] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(0) CU(0x1)
+[15224.028808] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=1
+[15224.028830] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(57605)
+[15224.029708] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(57605) has open context for 0 slot
+[15224.029721] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[15224.029730] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(57605) del context Domain(0) CU(0x1)
+[15224.029751] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=0

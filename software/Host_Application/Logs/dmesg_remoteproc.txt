@@ -1,0 +1,20 @@
+[16314.354224] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(64499) del context Domain(0) CU(0x1)
+[16314.354240] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=2
+[16314.354260] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(64499)
+[16314.354317] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(64499) has open context for 0 slot
+[16314.354325] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[16314.354334] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(64499) del context Domain(0) CU(0x1)
+[16314.354349] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=1
+[16314.354370] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(64499)
+[16314.355195] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Client pid(64499) has open context for 0 slot
+[16314.355204] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 _kds_fini_client: Removing CU Domain[0] CU Index [1]
+[16314.355213] zocl-drm axi:zyxclmm_drm:  ffff0008002f4410 kds_del_context: Client pid(64499) del context Domain(0) CU(0x1)
+[16314.355232] [drm] bitstream e2ed9314-41b9-da7a-98a2-748f7ee24801 unlocked, ref=0
+[16314.355254] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(64499)
+[16314.355371] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(64499)
+[18101.759917] remoteproc remoteproc0: powering up ff9a0000.rf5ss:r5f_0
+[18101.761014] remoteproc remoteproc0: Booting fw image rproc-ff9a0000.rf5ss:r5f_0-fw, size 834476
+[18101.767649]  remoteproc0#vdev0buffer: registered virtio0 (type 7)
+[18101.767669] remoteproc remoteproc0: remote processor ff9a0000.rf5ss:r5f_0 is now up
+[18101.787361] virtio_rpmsg_bus virtio0: rpmsg host is online
+[18101.881207] virtio_rpmsg_bus virtio0: creating channel rpmsg-openamp-demo-channel addr 0x400
