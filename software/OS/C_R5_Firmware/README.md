@@ -35,3 +35,11 @@ EOSSH
 ```
 
 The detailed walkthrough is at `../../../RPU_Code_Documentation.md`.
+
+
+## Migration note
+
+The first cut of `rpmsg-echo.c` used OpenAMP RPMsg for the alert path.
+Measured at ~17 ms one-way, well over the actuation NFR. The current
+implementation polls a TCM mailbox at `0xFFE20000` and writes AXI GPIO
+directly. See `docs/latency-report-final.md` for the side-by-side numbers.
