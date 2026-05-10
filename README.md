@@ -1,6 +1,6 @@
 # embeddedEgdeVisionAI
 
-Real-time multichannel edge-vision AI on the AMD Kria KV260 Vision AI Starter Kit.
+Embedded edge-vision AI on the AMD Kria KV260 Vision AI Starter Kit.
 
 The system performs person and face detection on four 1080p video streams in
 parallel, evaluates operator-drawn zones in user space and signals a real-time
